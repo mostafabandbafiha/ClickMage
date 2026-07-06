@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: DepthFade Ortho Friendly
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor v1.9.5.1\n// Available at the
+    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19501\nNode;AmplifyShaderEditor.CommentaryNode;25;-405.2167,-70.20154;Inherit;False;445.7994;278.5954;;2;18;16;Perspective
+    Switch;1,1,1,1;0;0\nNode;AmplifyShaderEditor.CommentaryNode;1;-2017.988,230.8874;Inherit;False;917.7495;488.009;;8;31;32;9;5;8;7;6;10;ClipPlanes;1,1,1,1;0;0\nNode;AmplifyShaderEditor.CommentaryNode;2;-1967.689,-143.7436;Inherit;False;841.0244;345.4684;;5;21;20;19;11;4;SceneDepth;1,1,1,1;0;0\nNode;AmplifyShaderEditor.CommentaryNode;3;-931.3625,-67.38656;Inherit;False;459.0942;258.6598;;3;14;13;22;Distance;1,1,1,1;0;0\nNode;AmplifyShaderEditor.ProjectionParams;4;-1588.279,-93.74358;Inherit;False;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.ProjectionParams;6;-1534.611,280.8874;Inherit;False;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.TFHCRemapNode;7;-1501.87,427.7477;Inherit;False;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;0;False;4;FLOAT;1;False;1;FLOAT;0\nNode;AmplifyShaderEditor.ScreenPosInputsNode;8;-1743.093,352.6757;Float;False;0;False;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.LerpOp;11;-1294.056,5.329569;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.OneMinusNode;19;-1725.688,120.1934;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.StaticSwitch;20;-1565.688,56.19352;Float;False;Property;_Keyword0;Keyword
+    0;3;0;Fetch;True;0;0;0;False;0;False;0;0;0;False;UNITY_REVERSED_Z;Toggle;2;Key0;Key1;Fetch;False;True;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.ScreenDepthNode;21;-1933.689,56.19352;Inherit;False;1;False;1;0;FLOAT4;0,0,0,0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.LerpOp;16;-135.4173,-20.20154;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleDivideOpNode;13;-752.9977,5.420139;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleSubtractOpNode;12;-1091.541,4.312566;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.LerpOp;5;-1297.238,308.003;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.OrthoParams;18;-356.2167,64.39383;Inherit;False;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.FunctionInput;22;-898.433,101.2688;Inherit;False;Distance;1;0;False;1;0;FLOAT;1;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SaturateNode;14;-628.1706,5.629826;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.DepthFade;17;-385.529,219.2786;Inherit;False;True;True;True;2;1;FLOAT3;0,0,0;False;0;FLOAT;1;False;1;FLOAT;0\nNode;AmplifyShaderEditor.BreakToComponentsNode;10;-1613.539,523.5671;Inherit;False;FLOAT2;1;0;FLOAT2;0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15\nNode;AmplifyShaderEditor.FunctionSwitchByPipeline;31;-1839.014,525.7981;Inherit;False;4;0;FLOAT2;0,0;False;3;FLOAT2;0,0;False;1;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.CustomExpressionNode;9;-1977.672,589.9452;Inherit;False;return
+    float2($UNITY_NEAR_CLIP_VALUE,$UNITY_RAW_FAR_CLIP_VALUE$)@;2;Create;0;ClipValues;True;False;0;;False;0;1;FLOAT2;0\nNode;AmplifyShaderEditor.CustomExpressionNode;32;-1993.014,499.7981;Inherit;False;float
+    far = 1@$$ #ifdef UNITY_REVERSED_Z$far = 0@$#endif$$return float2(UNITY_NEAR_CLIP_VALUE,far)@;2;Create;0;ClipValues
+    Birp;True;False;0;;False;0;1;FLOAT2;0\nNode;AmplifyShaderEditor.FunctionOutput;0;190.1584,-21.52168;Inherit;False;True;-1;Output;0;False;1;0;FLOAT;0;False;1;FLOAT;0\nWireConnection;7;0;8;3\nWireConnection;7;1;10;0\nWireConnection;7;2;10;1\nWireConnection;11;0;4;2\nWireConnection;11;1;4;3\nWireConnection;11;2;20;0\nWireConnection;19;0;21;0\nWireConnection;20;1;21;0\nWireConnection;20;0;19;0\nWireConnection;16;0;17;0\nWireConnection;16;1;14;0\nWireConnection;16;2;18;4\nWireConnection;13;0;12;0\nWireConnection;13;1;22;0\nWireConnection;12;0;11;0\nWireConnection;12;1;5;0\nWireConnection;5;0;6;2\nWireConnection;5;1;6;3\nWireConnection;5;2;7;0\nWireConnection;14;0;13;0\nWireConnection;17;0;22;0\nWireConnection;10;0;31;0\nWireConnection;31;0;32;0\nWireConnection;31;3;32;0\nWireConnection;31;1;9;0\nWireConnection;31;2;32;0\nWireConnection;0;0;16;0\nASEEND*/\n//CHKSM=214FEE948F5B3360B365BF2E4E57584FF01BA6A4"
+  m_functionName: 
+  m_description: 
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 0
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives: []
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems: []
+  m_nodeCategory: 3
+  m_headerStyle: 0
+  m_headerColor: {r: 1, g: 0.4, b: 0, a: 1}
+  m_customNodeCategory: 
+  m_previewPosition: 0
+  m_hidden: 0
+  m_url: 

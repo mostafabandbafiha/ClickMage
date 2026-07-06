@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f81beb769fbbf47b956f7e2d8d389a, type: 3}
+  m_Name: SO_StormCapacitor
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemID: StormCapacitor
+  displayName: Storm Capacitor
+  description: Attacks chain to 2 nearby enemies
+  rarity: 1
+  requiredSlotType: 0
+  icon: {fileID: 21300000, guid: 39cf845719810304786c3502ebc7683d, type: 3}
+  passiveEffects:
+  - {fileID: 11400000, guid: 75fa760f8e28b974d93559e5e7cfce8c, type: 2}
+  activeEffect: {fileID: 0}
+  maxStackSize: 1
+  worldPrefab: {fileID: 989638299112719969, guid: 6a695566f09bc2a40bb88adef56aaefb, type: 3}
+  _tags: 06000000
+  _worldVisualPrefab: {fileID: 4682617607350758300, guid: 001638f47a8114a4da8545c2775ece34, type: 3}

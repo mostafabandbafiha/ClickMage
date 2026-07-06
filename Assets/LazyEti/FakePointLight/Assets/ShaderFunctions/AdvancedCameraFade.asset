@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: AdvancedCameraFade
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor v1.9.7.1\n// Available at the
+    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19701\nNode;AmplifyShaderEditor.CommentaryNode;45;-1293.514,-96.52656;Inherit;False;1131.168;332.4331;;9;36;37;34;35;40;38;42;39;46;Far
+    Fade;1,1,1,1;0;0\nNode;AmplifyShaderEditor.CommentaryNode;44;-1184.111,286.6157;Inherit;False;1022.485;308.5889;;8;48;10;47;9;43;13;12;11;Close
+    Fade;1,1,1,1;0;0\nNode;AmplifyShaderEditor.CommentaryNode;33;-2347.533,113.6339;Inherit;False;1002.47;478.5582;;9;41;17;26;23;24;20;14;1;15;Distance
+    ;1,1,1,1;0;0\nNode;AmplifyShaderEditor.DistanceOpNode;1;-1705.061,268.6329;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;23;-1863.596,228.2715;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;26;-1864.496,320.3708;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.RegisterLocalVarNode;41;-1549.283,268.996;Inherit;False;Dist;-1;True;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleSubtractOpNode;11;-620.6798,369.8414;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleDivideOpNode;12;-466.6336,369.3028;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.OneMinusNode;36;-488.08,3.988406;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SaturateNode;37;-340.3456,4.010562;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleSubtractOpNode;34;-751.2825,4.283259;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleDivideOpNode;35;-602.2818,3.842166;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.ObjectToWorldTransfNode;14;-2256.009,185.6341;Inherit;False;1;0;FLOAT4;0,0,0,1;False;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.WorldSpaceCameraPos;15;-2293.419,409.4773;Inherit;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3\nNode;AmplifyShaderEditor.FunctionInput;20;-2045.102,409.5086;Inherit;False;CamPos;3;5;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.Vector3Node;24;-2046.795,259.3713;Inherit;False;Constant;_Vector0;Vector
+    0;4;0;Create;True;0;0;0;False;0;False;1,0,1;0,0,0;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3\nNode;AmplifyShaderEditor.FunctionInput;40;-963.3169,27.031;Inherit;False;FarFadeDistance;1;0;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.GetLocalVarNode;42;-931.4583,-50.52656;Inherit;False;41;Dist;1;0;OBJECT;;False;1;FLOAT;0\nNode;AmplifyShaderEditor.GetLocalVarNode;43;-807.6591,322.6157;Inherit;False;41;Dist;1;0;OBJECT;;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;47;-840.0242,394.0502;Inherit;False;closeFadeDistance;1;2;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;48;-684.8421,487.3237;Inherit;False;closeFadeTransition;1;3;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SaturateNode;13;-339.2769,369.5711;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;46;-829.2343,129.3044;Inherit;False;FarFadeTransition;1;1;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.RangedFloatNode;38;-1240.514,26.86154;Inherit;False;Property;_FarFade;Far
+    Fade;1;0;Create;True;0;0;0;False;1;Tooltip(Starts fading away at this distance
+    from the camera);False;200;10;0;400;0;1;FLOAT;0\nNode;AmplifyShaderEditor.RangedFloatNode;39;-1109.623,129.6349;Inherit;False;Property;_FarTransition;Far
+    Transition;2;0;Create;True;0;0;0;False;0;False;50;15;1;100;0;1;FLOAT;0\nNode;AmplifyShaderEditor.RangedFloatNode;9;-1109.255,394.2039;Inherit;False;Property;_CloseFade;Close
+    Fade;3;0;Create;True;1;CameraFade;0;0;False;0;False;0;40;0;50;0;1;FLOAT;0\nNode;AmplifyShaderEditor.RangedFloatNode;10;-965.0004,488.2486;Inherit;False;Property;_CloseTransition;Close
+    Transition;4;0;Create;True;0;0;0;False;0;False;0;-30;0;50;0;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;17;-2046.994,185.2733;Inherit;False;WorldPos;3;4;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;29;-140.7547,154.0568;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.RangedFloatNode;32;104.7333,74.09206;Inherit;False;Constant;_Float0;Float
+    0;5;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0\nNode;AmplifyShaderEditor.VertexToFragmentNode;49;37.9296,153.5026;Inherit;False;False;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.ToggleSwitchNode;31;264.7333,131.0922;Inherit;False;Property;DistanceFade;___Distance
+    Fade___;0;0;Create;True;0;0;0;False;1;Space(25);False;0;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;0;497.2844,131.6016;Inherit;False;True;-1;FadeAlpha;0;False;1;0;FLOAT;0;False;1;FLOAT;0\nWireConnection;1;0;23;0\nWireConnection;1;1;26;0\nWireConnection;23;0;17;0\nWireConnection;23;1;24;0\nWireConnection;26;0;24;0\nWireConnection;26;1;20;0\nWireConnection;41;0;1;0\nWireConnection;11;0;43;0\nWireConnection;11;1;47;0\nWireConnection;12;0;11;0\nWireConnection;12;1;48;0\nWireConnection;36;0;35;0\nWireConnection;37;0;36;0\nWireConnection;34;0;42;0\nWireConnection;34;1;40;0\nWireConnection;35;0;34;0\nWireConnection;35;1;46;0\nWireConnection;20;0;15;0\nWireConnection;40;0;38;0\nWireConnection;47;0;9;0\nWireConnection;48;0;10;0\nWireConnection;13;0;12;0\nWireConnection;46;0;39;0\nWireConnection;17;0;14;0\nWireConnection;29;0;37;0\nWireConnection;29;1;13;0\nWireConnection;49;0;29;0\nWireConnection;31;0;32;0\nWireConnection;31;1;49;0\nWireConnection;0;0;31;0\nASEEND*/\n//CHKSM=1796CD219232924E7C02DAE8698DFA8DC6E46A76"
+  m_functionName: 
+  m_description: The Advanced distance fade function allows to fade out objects that
+    are close OR far from the camera.
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 1
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives: []
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems: []
+  m_nodeCategory: 3
+  m_headerStyle: 0
+  m_headerColor: {r: 1, g: 0.4, b: 0, a: 1}
+  m_customNodeCategory: 
+  m_previewPosition: 0
+  m_hidden: 0
+  m_url: 

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f81beb769fbbf47b956f7e2d8d389a, type: 3}
+  m_Name: SO_WoodenShield
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemID: WoodenShield
+  displayName: Wooden Shield
+  description: +5 armor
+  rarity: 0
+  requiredSlotType: 0
+  icon: {fileID: 21300000, guid: c4908b535db3f394b87bea1086490229, type: 3}
+  passiveEffects:
+  - {fileID: 11400000, guid: d6fd54e86440d8d49b84c72f576b6c8f, type: 2}
+  activeEffect: {fileID: 0}
+  maxStackSize: 1
+  worldPrefab: {fileID: 989638299112719969, guid: 7ecdd2ad1022f7644b8b36a64c1319c4, type: 3}
+  _tags: 06000000
+  _worldVisualPrefab: {fileID: 2127794541822836812, guid: f3a75e63fd06d804598fcd32245272d7, type: 3}

@@ -1,0 +1,208 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: FakeLight_White
+  m_Shader: {fileID: 4800000, guid: a3a929c6ce1b6c24a86decaf6ab40814, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _ACCURATECOLORS_ON
+  - _BLENDMODE_ADDITIVE
+  - _SCREENSHADOWS_OFF
+  - _TEXTUREPACKING_RED
+  - ___HALO____ON
+  m_InvalidKeywords:
+  - _EXPERIMENTALSHADOWS_ON
+  - _FLICKERING_ON
+  - _FLICKERRADIUS_ON
+  - _KEYWORD1_ON
+  - _NOISE_ON
+  - _RECEIVESHADOWS_OFF
+  - _RECEIVE_SHADOWS_OFF
+  - _SCREENSHADOWSEXPERIMENTAL_ON
+  - _SCREENSPACESHADOWSEXPERIMENTAL_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 4000
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: _false
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _CameraDepthTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ColorGradient:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ColorGradient1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GradientTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: 772031b03d9d46e4ab03e15c8e17718c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureGradient:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TopTexture0:
+        m_Texture: {fileID: 2800000, guid: 772031b03d9d46e4ab03e15c8e17718c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - DayAlpha: 0
+    - DistanceFade: 0
+    - _A: 10
+    - _AccurateColors: 1
+    - _AccurateColorsReqOpaqueTex: 0
+    - _AlphaCutoff: 0.5
+    - _AngleBlend: 0.143
+    - _AngleHardness: 1
+    - _AngleSoftness: 0.5
+    - _Blendmode: 0
+    - _CloseFade: 5
+    - _CloseTransition: 3
+    - _DayAlpha1: 0
+    - _DayFading: 0
+    - _DepthWrite: 0
+    - _DitherIntensity: 0.5
+    - _DitheringPattern: 0
+    - _DstBlend: 1
+    - _EXPERIMENTALShadows: 1
+    - _FadeDistance: 65
+    - _FadeOffset: 38
+    - _FadeSoftness: 25.8
+    - _FadeTransition: 50
+    - _FadingDistance: 1
+    - _FarFade: 20
+    - _FarTransition: 10
+    - _FlickerHardness: 0.117
+    - _FlickerIntensity: 0.5
+    - _FlickerRadius: 1
+    - _FlickerSoftness: 0.5
+    - _FlickerSpeed: 1
+    - _Flickering: 1
+    - _Float0: -0.09
+    - _Float1: 8.19
+    - _Float3: -0.24
+    - _Float4: 0.06
+    - _Float5: -0.1
+    - _Halo: 0.693
+    - _HaloDepthFade: 0.5
+    - _HaloPosterize: 1
+    - _HaloPower: 1
+    - _HaloSize: 1.4
+    - _HaloSoftness: 0.5
+    - _Hardness: 0.5
+    - _Keyword1: 1
+    - _LightPosterize: 70.24
+    - _LightRadius: 0.89
+    - _LightSoftness: 0.702
+    - _Noise: 1
+    - _NoiseMovement: 2
+    - _NoiseScale: 0.388
+    - _Noisiness: 0.062
+    - _NormalIntensity: 0.323
+    - _NormalsBlend: 0.18
+    - _NormalsBlending: 0.2
+    - _NormalsSoftness: 0.5
+    - _ParticleMesh: 0
+    - _ParticleMode: 0
+    - _Posterize: 65.5
+    - _PosterizeHalo: 1
+    - _PosterizeLight: 70.2
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _Radius: 0.886
+    - _RadiusFlickering: 0.389
+    - _RandomOffset: 0
+    - _ReceiveShadows: 0
+    - _ScreenShadows: 0
+    - _ScreenShadowsEXPERIMENTAL: 1
+    - _ScreenSpaceShadowsEXPERIMENTAL: 1
+    - _ShadingBlend: 0.12
+    - _ShadingSoftness: 0.5
+    - _ShadowThreshold: 0.5
+    - _ShadowsHEAVY: 0
+    - _SizeFlickering: 0.1
+    - _Softness: 0.529
+    - _Spacing: 1.24
+    - _SpecIntensity: 0.5
+    - _SpecularHighlight: 0
+    - _SrcBlend: 5
+    - _StartDistance: 400
+    - _StartFadeDistance: 100
+    - _StartFadeOffset: 50
+    - _StartFadeSoftness: 10
+    - _StepSpacing: 3
+    - _StepsSpacing: 3
+    - _Test: -23.31
+    - _TexturePacking: 0
+    - _TransitionDistance: 26
+    - _UseLightNormal: 0.5
+    - _UseTextureGradient: 0
+    - __HEAVYShadows: 0
+    - ___DayAlpha___: 0
+    - ___DistanceFade___: 0
+    - ___Flickering___: 0
+    - ___Halo___: 1
+    - ___Noise___: 0
+    - ___ParticleMode___: 0
+    - _false: -30.01
+    - _randomOffset: 0
+    - _test: 0.33
+    - _test1: 5
+    - _true: 2.32
+    - _z: 3
+    m_Colors:
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FlickerHue: {r: 1, g: 1, b: 1, a: 1}
+    - _HTint: {r: 0.47735056, g: 3.523293, b: 0, a: 1}
+    - _HaloTint: {r: 5.4033303, g: 5.4033303, b: 5.4033303, a: 1}
+    - _LTint: {r: 0, g: 0.37450984, b: 0.08418288, a: 0.38431373}
+    - _LightTint: {r: 1.0294938, g: 1.0294938, b: 1.0294938, a: 1}
+    - _Tint: {r: 1, g: 0.94587564, b: 0.9009434, a: 1}
+    - _Vector0: {r: 0.05, g: 0, b: 0, a: 0}
+    - _Vector1: {r: 5.86, g: -2, b: 0, a: 0}
+    - _Vector2: {r: -1, g: -0.2, b: 0, a: 0}
+    - _Vectora: {r: -1, g: -0.5, b: 0, a: 0}
+    - _max: {r: 0, g: 0.0001, b: 0, a: 0}
+    - _min: {r: -1, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ShadowRunnerAnimator
+  m_Controller: {fileID: 9100000, guid: c38fa9d2fd021994eb1add035df38838, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 0b70d930ad98b3a44adb3d252e72b8de, type: 2}
+    m_OverrideClip: {fileID: 1946978602961586252, guid: bc4494a4413acf54c8fc449c1b2fb9ad, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 18c52f661cb308a44b79b4de72a16b68, type: 2}
+    m_OverrideClip: {fileID: 295798190847476833, guid: bc4494a4413acf54c8fc449c1b2fb9ad, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: f26d17c0c901eb64e8e5c631327f859b, type: 2}
+    m_OverrideClip: {fileID: -1215953080361456483, guid: bc4494a4413acf54c8fc449c1b2fb9ad, type: 3}

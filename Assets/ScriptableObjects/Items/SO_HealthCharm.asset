@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f81beb769fbbf47b956f7e2d8d389a, type: 3}
+  m_Name: SO_HealthCharm
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemID: HealthCharm
+  displayName: Health Charm
+  description: +3 HP/s regeneration
+  rarity: 0
+  requiredSlotType: 0
+  icon: {fileID: 21300000, guid: 9ca7f7d8a6dd4a14694fc77c99834ceb, type: 3}
+  passiveEffects:
+  - {fileID: 11400000, guid: 2adf7a7eb17794441b05dd2fbe494c6c, type: 2}
+  activeEffect: {fileID: 0}
+  maxStackSize: 1
+  worldPrefab: {fileID: 989638299112719969, guid: 340f77c1000ea7e4baa3f8614160c772, type: 3}
+  _tags: 06000000
+  _worldVisualPrefab: {fileID: 2936499029713382524, guid: 8e4af0ffc8d5bdd48abd40fd42f9f660, type: 3}

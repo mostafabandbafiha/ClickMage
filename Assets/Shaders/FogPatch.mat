@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: FogPatch
+  m_Shader: {fileID: 4800000, guid: 3cbc265d49536174b9dbe6591de65231, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Cookie:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DistortTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 404fa6a9fef1e6f488891d939e0bf7aa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TexA:
+        m_Texture: {fileID: 2800000, guid: 404fa6a9fef1e6f488891d939e0bf7aa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TexB:
+        m_Texture: {fileID: 10307, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Alpha: 1
+    - _BowlStrength: 0.6
+    - _Contrast: 8
+    - _CookieStrength: 1
+    - _DensityMult: 1.2
+    - _DepthSoftness: 4
+    - _DistortAmount: 0.361
+    - _DistortCookie: 0
+    - _DistortCookieAmount: 1
+    - _DistortRotationSpeed: 0
+    - _DistortScale: 2.2
+    - _DistortSpeed: 0
+    - _EdgeFade: 0.331
+    - _EdgeFadeX: 0.366
+    - _EdgeFadeY: 0.39
+    - _EdgeFadeZ: 0.369
+    - _FogDriftStrength: 0.513
+    - _FogOrder: 0
+    - _FogSwirlStrength: 0.385
+    - _GroundFade: 0.22
+    - _GroundFadeHeight: 0.8
+    - _HeightBase: 0
+    - _HeightFade: 1.2
+    - _HeightGradPow: 0.66
+    - _HeightPower: 1.6
+    - _IgnoreDepth: 0.12
+    - _IntersectionThresholdMax: 2
+    - _Invert: 0
+    - _LODDistance: 20
+    - _LayerSeparation: 0.12
+    - _Magnitude: 0
+    - _MainDistort: 0
+    - _MainDistortAmount: 1
+    - _NoiseScale: -0.14
+    - _Offset: 0
+    - _Opacity: 0.984
+    - _OriginX: 0
+    - _OriginY: 0
+    - _ParallaxStrength: 0.4
+    - _Period: 1
+    - _Rotation: 0
+    - _RotationSpeed: 0
+    - _SecondaryScale: 1.48
+    - _SpeedX: 0
+    - _SpeedY: 0
+    - _StepSize: 0.02
+    - _Steps: 8
+    - _TestDistortion: 0
+    - _TexBlend: 0.692
+    - _Translate: 0
+    - _UseCookie: 0
+    - _UseMainDistort: 0
+    - _UseProceduralNoise: 0.09
+    - _WaveHeight: 0.055
+    - _WaveScale: 1.2
+    - _WaveSpeed: 0.4
+    m_Colors:
+    - _BoundsMin: {r: -0.5, g: -0.5, b: -0.5, a: 0}
+    - _BoundsSize: {r: 1, g: 1, b: 1, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 0.5}
+    - _ColorBottom: {r: 0.45, g: 0.65, b: 0.9, a: 1}
+    - _ColorTop: {r: 0.75, g: 0.88, b: 1, a: 1}
+    - _Speed: {r: 0.02, g: 0.01, b: 0, a: 0}
+    - _Speed1: {r: 0.018, g: 0.009, b: 0, a: 0}
+    - _Speed2: {r: -0.011, g: 0.016, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

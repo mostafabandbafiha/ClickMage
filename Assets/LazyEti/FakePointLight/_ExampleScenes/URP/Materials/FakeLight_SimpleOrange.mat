@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: FakeLight_SimpleOrange
+  m_Shader: {fileID: 4800000, guid: a3a929c6ce1b6c24a86decaf6ab40814, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _BLENDMODE_ADDITIVE
+  - _SCREENSHADOWS_OFF
+  - _TEXTUREPACKING_RED
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _ColorGradient1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GradientTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - DayAlpha: 0
+    - DistanceFade: 0
+    - _AccurateColors: 0
+    - _AccurateColorsReqOpaqueTex: 0
+    - _AlphaCutoff: 0.5
+    - _Blendmode: 0
+    - _CloseFade: 9.9
+    - _CloseTransition: 24.8
+    - _DayFading: 0
+    - _DepthWrite: 0
+    - _DitherIntensity: 0.5
+    - _DitheringPattern: 0
+    - _DstBlend: 1
+    - _FarFade: 200
+    - _FarTransition: 50
+    - _FlickerIntensity: 0.5
+    - _FlickerSoftness: 0.5
+    - _FlickerSpeed: 1
+    - _HaloDepthFade: 0.5
+    - _HaloPosterize: 1
+    - _HaloSize: 1
+    - _LightPosterize: 1
+    - _LightSoftness: 1
+    - _NoiseMovement: 0
+    - _NoiseScale: 1
+    - _Noisiness: 0
+    - _NormalsBlending: 1
+    - _NormalsSoftness: 0.5
+    - _ParticleMode: 0
+    - _PosterizeLight: 1
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _RandomOffset: 0
+    - _ReceiveShadows: 1
+    - _ScreenShadows: 0
+    - _ShadingBlend: 1
+    - _ShadingSoftness: 0.5
+    - _ShadowThreshold: 0.5
+    - _ShadowsHEAVY: 0
+    - _SizeFlickering: 0.2
+    - _SpecIntensity: 0.5
+    - _SpecularHighlight: 0
+    - _SrcBlend: 5
+    - _StepSpacing: 3
+    - _StepsSpacing: 1
+    - _TexturePacking: 0
+    - __HEAVYShadows: 0
+    - ___Flickering___: 0
+    - ___Halo___: 0
+    - ___Noise___: 0
+    - _randomOffset: 0
+    m_Colors:
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FlickerHue: {r: 1, g: 1, b: 1, a: 1}
+    - _HaloTint: {r: 1, g: 1, b: 1, a: 1}
+    - _LightTint: {r: 2, g: 0.10540974, b: 0, a: 1}
+  m_BuildTextureStacks: []

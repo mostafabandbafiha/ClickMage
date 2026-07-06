@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f81beb769fbbf47b956f7e2d8d389a, type: 3}
+  m_Name: SO_ShamanAura
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemID: ShamanAura
+  displayName: Shaman Aura
+  description: 
+  rarity: 1
+  requiredSlotType: 0
+  icon: {fileID: 21300000, guid: 70141d51621e24facbca9196bbde84b4, type: 3}
+  passiveEffects:
+  - {fileID: 11400000, guid: ebe1a580d34703541817eee92d7e730b, type: 2}
+  activeEffect: {fileID: 0}
+  maxStackSize: 1
+  worldPrefab: {fileID: 989638299112719969, guid: b372e0e6b17639a49bc50f38123ce7bb, type: 3}
+  _tags: 06000000
+  _worldVisualPrefab: {fileID: 393970033292005370, guid: 1b6b38c927f78ba439de69ea2dbeb6c4, type: 3}

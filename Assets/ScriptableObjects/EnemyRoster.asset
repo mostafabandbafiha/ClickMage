@@ -1,0 +1,195 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: EnemyRoster
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyRosterSO
+  Entries:
+  - Prefab: {fileID: 3700567133294058342, guid: 87aac71c78704444884b655d39954e51, type: 3}
+    DisplayName: Goblin Scavenger
+    UnlockNight: 1
+    BudgetCost: 0.8
+    BaseHP: 60
+    BaseArmor: 0
+    IsRanged: 0
+    HasEvasion: 0
+    IsSeige: 0
+    Resistances: 0
+    WeightVsAoE: -1.5
+    WeightVsSlow: -0.5
+    WeightVsPhysical: 1
+    WeightVsFire: -0.3
+    WeightVsFrost: -0.8
+    WeightVsLightning: -1
+    WeightVsBleed: 0.2
+    WeightVsDamagedTowers: 1.2
+    WeightAwayFromHero: 0.8
+    LateGameBonus: 0.3
+  - Prefab: {fileID: 7119618783734678427, guid: 232f744bf40149545a018de68e929493, type: 3}
+    DisplayName: Skeleton Archer
+    UnlockNight: 1
+    BudgetCost: 1
+    BaseHP: 70
+    BaseArmor: 0
+    IsRanged: 1
+    HasEvasion: 0
+    IsSeige: 0
+    Resistances: 1
+    WeightVsAoE: 0
+    WeightVsSlow: -1
+    WeightVsPhysical: 1.5
+    WeightVsFire: -0.5
+    WeightVsFrost: -1.2
+    WeightVsLightning: -0.8
+    WeightVsBleed: -0.3
+    WeightVsDamagedTowers: 0.5
+    WeightAwayFromHero: 0.6
+    LateGameBonus: 0.5
+  - Prefab: {fileID: 3977932010977271116, guid: 0236a9b95a0843e4cacc8b5a7c0555f5, type: 3}
+    DisplayName: Ogre Brute
+    UnlockNight: 3
+    BudgetCost: 2.5
+    BaseHP: 400
+    BaseArmor: 15
+    IsRanged: 0
+    HasEvasion: 0
+    IsSeige: 0
+    Resistances: 17
+    WeightVsAoE: 2
+    WeightVsSlow: -0.5
+    WeightVsPhysical: 1.8
+    WeightVsFire: 0.5
+    WeightVsFrost: -1.5
+    WeightVsLightning: -0.3
+    WeightVsBleed: 1
+    WeightVsDamagedTowers: 1.5
+    WeightAwayFromHero: -0.2
+    LateGameBonus: 0.8
+  - Prefab: {fileID: 4730860226465143978, guid: fbf071846c4cb2241ab848abcbcb5f7a, type: 3}
+    DisplayName: Plague Caster
+    UnlockNight: 5
+    BudgetCost: 2
+    BaseHP: 120
+    BaseArmor: 0
+    IsRanged: 1
+    HasEvasion: 0
+    IsSeige: 0
+    Resistances: 18
+    WeightVsAoE: 0.5
+    WeightVsSlow: 0.3
+    WeightVsPhysical: 0.8
+    WeightVsFire: 0
+    WeightVsFrost: 0.5
+    WeightVsLightning: 1.2
+    WeightVsBleed: 0.3
+    WeightVsDamagedTowers: 0.8
+    WeightAwayFromHero: 1
+    LateGameBonus: 1.2
+  - Prefab: {fileID: 3855237056446749654, guid: 01e5fd4abf85fe147aba82afac1d06b9, type: 3}
+    DisplayName: Shadow Runner
+    UnlockNight: 7
+    BudgetCost: 1.8
+    BaseHP: 150
+    BaseArmor: 0
+    IsRanged: 0
+    HasEvasion: 1
+    IsSeige: 0
+    Resistances: 1
+    WeightVsAoE: -2
+    WeightVsSlow: -1.8
+    WeightVsPhysical: 2
+    WeightVsFire: -0.5
+    WeightVsFrost: -2
+    WeightVsLightning: -0.5
+    WeightVsBleed: -0.8
+    WeightVsDamagedTowers: 1
+    WeightAwayFromHero: 1.5
+    LateGameBonus: 0.6
+  - Prefab: {fileID: 4434117855645125206, guid: 1e5ab2eff88ee05419b8d8930f14186e, type: 3}
+    DisplayName: Siege Golem
+    UnlockNight: 10
+    BudgetCost: 4
+    BaseHP: 800
+    BaseArmor: 25
+    IsRanged: 0
+    HasEvasion: 0
+    IsSeige: 1
+    Resistances: 17
+    WeightVsAoE: 2.5
+    WeightVsSlow: -2
+    WeightVsPhysical: 2
+    WeightVsFire: 0.8
+    WeightVsFrost: -2.5
+    WeightVsLightning: -0.5
+    WeightVsBleed: 1.5
+    WeightVsDamagedTowers: 2
+    WeightAwayFromHero: -0.3
+    LateGameBonus: 1
+  - Prefab: {fileID: 2931532483546083072, guid: 5b3080a8da5362d4ea6abdf10998c0bf, type: 3}
+    DisplayName: Nightmare Shaman
+    UnlockNight: 14
+    BudgetCost: 3
+    BaseHP: 200
+    BaseArmor: 5
+    IsRanged: 1
+    HasEvasion: 0
+    IsSeige: 0
+    Resistances: 32
+    WeightVsAoE: 1.5
+    WeightVsSlow: -0.5
+    WeightVsPhysical: 2
+    WeightVsFire: -0.3
+    WeightVsFrost: -0.3
+    WeightVsLightning: -1
+    WeightVsBleed: -1.2
+    WeightVsDamagedTowers: 1
+    WeightAwayFromHero: 1.5
+    LateGameBonus: 2
+  - Prefab: {fileID: 4556143751246155099, guid: 14ceb95d492a6244b993fdab60faad7f, type: 3}
+    DisplayName: Dread Knight
+    UnlockNight: 18
+    BudgetCost: 5
+    BaseHP: 600
+    BaseArmor: 20
+    IsRanged: 0
+    HasEvasion: 0
+    IsSeige: 0
+    Resistances: 19
+    WeightVsAoE: 1
+    WeightVsSlow: -1
+    WeightVsPhysical: 2.5
+    WeightVsFire: 0.5
+    WeightVsFrost: -1.5
+    WeightVsLightning: -0.5
+    WeightVsBleed: 1.8
+    WeightVsDamagedTowers: 1.2
+    WeightAwayFromHero: -0.5
+    LateGameBonus: 2.5
+  - Prefab: {fileID: 788957032114902401, guid: 4d146064323d05146ae765e37428562e, type: 3}
+    DisplayName: The Abyssal Horror
+    UnlockNight: 30
+    BudgetCost: 999
+    BaseHP: 5000
+    BaseArmor: 40
+    IsRanged: 0
+    HasEvasion: 0
+    IsSeige: 1
+    Resistances: 19
+    WeightVsAoE: 0
+    WeightVsSlow: 0
+    WeightVsPhysical: 0
+    WeightVsFire: 0
+    WeightVsFrost: 0
+    WeightVsLightning: 0
+    WeightVsBleed: 0
+    WeightVsDamagedTowers: 0
+    WeightAwayFromHero: 0
+    LateGameBonus: 0

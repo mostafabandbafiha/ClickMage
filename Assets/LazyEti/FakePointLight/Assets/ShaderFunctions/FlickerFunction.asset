@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: FlickerFunction
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor v1.9.7.1\n// Available at the
+    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19701\nNode;AmplifyShaderEditor.CommentaryNode;46;221.2885,11.28805;Inherit;False;977.418;406.185;Flicker
+    Hue;7;83;55;45;67;51;70;68;;0.9780998,0.5424528,1,1;0;0\nNode;AmplifyShaderEditor.SimpleTimeNode;17;-1264.573,-53.2481;Inherit;False;1;0;FLOAT;1;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleAddOpNode;32;-1055.663,-52.82684;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SaturateNode;16;-164.7838,-53.00267;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.OneMinusNode;11;-602.6149,219.5453;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;9;-788.5004,219.8999;Inherit;False;FlickerIntensity;1;0;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.TFHCRemapNode;27;-417.6599,-53.23154;Inherit;True;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;0;False;4;FLOAT;1;False;1;FLOAT;0\nNode;AmplifyShaderEditor.ScaleNode;44;-708.3644,117.6956;Inherit;False;0.5;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.RangedFloatNode;54;-163.3161,-129.2706;Inherit;False;Constant;_on;on;4;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0\nNode;AmplifyShaderEditor.TFHCRemapNode;64;-774.2289,-53.62566;Inherit;False;5;0;FLOAT;0;False;1;FLOAT;-2;False;2;FLOAT;2;False;3;FLOAT;0;False;4;FLOAT;1;False;1;FLOAT;0\nNode;AmplifyShaderEditor.StaticSwitch;53;-12.40334,-77.30457;Inherit;False;Property;___Flickering___;___Flickering___;0;0;Create;True;0;0;0;False;1;Space(25);False;0;0;0;True;;Toggle;2;Key0;Key1;Create;True;True;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.OneMinusNode;42;-567.0509,14.51667;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;21;-1086.729,119.2934;Inherit;False;FlickerHardness;1;2;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.OneMinusNode;65;-895.2019,116.1311;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.RangedFloatNode;15;-1058.649,219.8257;Inherit;False;Property;_FlickerIntensity;Flicker
+    Intensity;1;0;Create;True;0;0;0;False;0;False;0.5;0;0;1;0;1;FLOAT;0\nNode;AmplifyShaderEditor.CustomExpressionNode;58;-928.3544,-52.13611;Inherit;False;float
+    n = sin (2 * x) + sin(3.14159265 * x)@$$return n@;1;Create;1;True;x;FLOAT;0;In;;Inherit;False;noise;True;False;0;;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.RangedFloatNode;20;-1356.974,118.8335;Inherit;False;Property;_FlickerSoftness;Flicker
+    Softness;4;0;Create;True;0;0;0;False;0;False;0.5;1;0;1;0;1;FLOAT;0\nNode;AmplifyShaderEditor.ScaleNode;82;-1452.483,-52.88657;Inherit;False;4;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.RangedFloatNode;12;-2018.402,-55.4241;Inherit;False;Property;_FlickerSpeed;Flicker
+    Speed;3;0;Create;True;1;Flickering;0;0;False;0;False;1;5.31;0.01;5;0;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;8;-1750.75,-56.08475;Inherit;False;FlickerSpeed;1;1;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleAddOpNode;81;-1562.629,-51.66369;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.RangedFloatNode;28;-2018.665,38.13907;Inherit;False;Constant;_r;r;3;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0\nNode;AmplifyShaderEditor.PiNode;31;-1271.273,35.43261;Inherit;False;1;0;FLOAT;1;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;29;-1875.666,37.13907;Inherit;False;RandOffset;1;3;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.ScaleNode;80;-1702.792,16.97572;Inherit;False;0.1;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.RelayNode;55;266.2453,238.9423;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;83;391.9314,230.8806;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.ColorNode;70;464.7393,59.76548;Inherit;False;Property;_FlickerHue;Flicker
+    Hue;2;0;Create;True;0;0;0;False;0;False;1,1,1,0;1,1,1,0;True;False;0;6;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT3;5\nNode;AmplifyShaderEditor.LerpOp;51;693.5588,182.3092;Inherit;False;3;0;FLOAT3;0,0,0;False;1;FLOAT3;1,1,1;False;2;FLOAT;0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.RangedFloatNode;68;533.6156,206.2958;Inherit;False;Constant;_Float0;Float
+    0;4;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0\nNode;AmplifyShaderEditor.VertexToFragmentNode;67;847.0047,182.088;Inherit;False;False;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;0;255.3635,-77.07259;Inherit;False;True;-1;Flickering;0;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;45;1053.916,182.0568;Inherit;False;False;-1;Hue;1;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nWireConnection;17;0;82;0\nWireConnection;32;0;17;0\nWireConnection;32;1;31;0\nWireConnection;16;0;27;0\nWireConnection;11;0;9;0\nWireConnection;9;0;15;0\nWireConnection;27;0;64;0\nWireConnection;27;1;42;0\nWireConnection;27;2;44;0\nWireConnection;27;3;11;0\nWireConnection;44;0;65;0\nWireConnection;64;0;58;0\nWireConnection;53;1;54;0\nWireConnection;53;0;16;0\nWireConnection;42;0;44;0\nWireConnection;21;0;20;0\nWireConnection;65;0;21;0\nWireConnection;58;0;32;0\nWireConnection;82;0;81;0\nWireConnection;8;0;12;0\nWireConnection;81;0;8;0\nWireConnection;81;1;80;0\nWireConnection;31;0;29;0\nWireConnection;29;0;28;0\nWireConnection;80;0;29;0\nWireConnection;55;0;53;0\nWireConnection;83;0;55;0\nWireConnection;83;1;55;0\nWireConnection;51;0;70;0\nWireConnection;51;1;68;0\nWireConnection;51;2;83;0\nWireConnection;67;0;51;0\nWireConnection;0;0;53;0\nWireConnection;45;0;67;0\nASEEND*/\n//CHKSM=F5B047995FE96929DE43B4ADEC8615FEBA09D5CB"
+  m_functionName: 
+  m_description: 
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 0
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives: []
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems: []
+  m_nodeCategory: 3
+  m_headerStyle: 0
+  m_headerColor: {r: 1, g: 0.4, b: 0, a: 1}
+  m_customNodeCategory: 
+  m_previewPosition: 0
+  m_hidden: 0
+  m_url: 

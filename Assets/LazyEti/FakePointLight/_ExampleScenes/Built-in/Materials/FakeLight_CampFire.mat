@@ -1,0 +1,220 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: FakeLight_CampFire
+  m_Shader: {fileID: 4800000, guid: 0fa659ac375687e4d8b9ca17108ed342, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _BLENDMODE_ADDITIVE
+  - _SCREENSHADOWS_OFF
+  - _TEXTUREPACKING_RED
+  - ___FLICKERING____ON
+  - ___HALO____ON
+  - ___NOISE____ON
+  m_InvalidKeywords:
+  - _EXPERIMENTALSHADOWS_ON
+  - _FLICKERING_ON
+  - _FLICKERRADIUS_ON
+  - _KEYWORD1_ON
+  - _NOISE_ON
+  - _RECEIVESHADOWS_OFF
+  - _RECEIVE_SHADOWS_OFF
+  - _SCREENSHADOWSEXPERIMENTAL_ON
+  - _SCREENSPACESHADOWSEXPERIMENTAL_ON
+  - _SHADOWSHEAVY_ON
+  - _USETEXTUREGRADIENT_ON
+  - __HEAVYSHADOWS_ON
+  - ___DISTANCEFADE____ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: _false
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _CameraDepthTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ColorGradient:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ColorGradient1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GradientTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: 772031b03d9d46e4ab03e15c8e17718c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTexture:
+        m_Texture: {fileID: 2800000, guid: 32a4c22345786dd43886feb67b1ac7e2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureGradient:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TopTexture0:
+        m_Texture: {fileID: 2800000, guid: 772031b03d9d46e4ab03e15c8e17718c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - DayAlpha: 0
+    - DistanceFade: 0
+    - _A: 10
+    - _AlphaCutoff: 0.5
+    - _AngleBlend: 0.143
+    - _AngleHardness: 1
+    - _AngleSoftness: 0.5
+    - _Blendmode: 0
+    - _CloseFade: 0
+    - _CloseTransition: 0
+    - _DayAlpha: 0
+    - _DayAlpha1: 0
+    - _DayFading: 0
+    - _DepthWrite: 0
+    - _DitherIntensity: 0.5
+    - _DitheringPattern: 0
+    - _DstBlend: 1
+    - _EXPERIMENTALShadows: 1
+    - _FadeDistance: 65
+    - _FadeOffset: 38
+    - _FadeSoftness: 25.8
+    - _FadeTransition: 50
+    - _FadingDistance: 1
+    - _FarFade: 200
+    - _FarTransition: 50
+    - _FlickerHardness: 0.132
+    - _FlickerIntensity: 0.287
+    - _FlickerRadius: 1
+    - _FlickerSoftness: 0.898
+    - _FlickerSpeed: 1
+    - _Flickering: 1
+    - _Float0: 0.3
+    - _Float1: 8.19
+    - _Float3: -0.24
+    - _Float4: -0.13
+    - _Float5: -0.1
+    - _Float6: -0.001
+    - _Halo: 0.693
+    - _HaloDepthFade: 0.5
+    - _HaloPosterize: 1
+    - _HaloPower: 1
+    - _HaloSize: 4.35
+    - _HaloSoftness: 0.5
+    - _Hardness: 0.5
+    - _Keyword1: 1
+    - _LightPosterize: 50.4
+    - _LightRadius: 0.89
+    - _LightSoftness: 0.455
+    - _Noise: 1
+    - _NoiseMovement: 0.2
+    - _NoiseScale: 0.62
+    - _Noisiness: 0.923
+    - _NormalIntensity: 0.323
+    - _NormalsBlend: 0
+    - _NormalsBlending: 0
+    - _NormalsSoftness: 0.314
+    - _ParticleMesh: 0
+    - _ParticleMode: 0
+    - _Posterize: 65.5
+    - _PosterizeHalo: 1
+    - _PosterizeLight: 11
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _Radius: 0.886
+    - _RadiusFlickering: 0.389
+    - _RandomOffset: 0
+    - _ReceiveShadows: 0
+    - _ScreenShadows: 0
+    - _ScreenShadowsEXPERIMENTAL: 1
+    - _ScreenSpaceShadowsEXPERIMENTAL: 1
+    - _ShadingBlend: 0
+    - _ShadingSoftness: 0.5
+    - _ShadowThreshold: 0.5
+    - _ShadowsHEAVY: 1
+    - _SizeFlickering: 0.2
+    - _Softness: 0.529
+    - _Spacing: 2
+    - _SpecIntensity: 0.5
+    - _SpecularHighlight: 0
+    - _SrcBlend: 1
+    - _StartDistance: 400
+    - _StartFadeDistance: 100
+    - _StartFadeOffset: 50
+    - _StartFadeSoftness: 10
+    - _StepSpacing: 1.72
+    - _StepsSpacing: 2
+    - _Test: -23.31
+    - _TexturePacking: 0
+    - _TransitionDistance: 26
+    - _UseLightNormal: 0.5
+    - _UseTextureGradient: 1
+    - __DayAlpha___: 0
+    - __HEAVYShadows: 1
+    - ___DayAlpha___: 0
+    - ___DistanceFade___: 1
+    - ___Flickering___: 1
+    - ___Halo___: 1
+    - ___Noise___: 1
+    - ___ParticleMode___: 0
+    - _closeFadeDistance: 0
+    - _closeFadeTransition: 0
+    - _false: -30.01
+    - _farFadeDistance: 400
+    - _farFadeTransition: 50
+    - _max: 0.68
+    - _randomOffset: 0
+    - _test: 0.33
+    - _test1: 5
+    - _true: 2.32
+    - _z: 5
+    m_Colors:
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FlickerHue: {r: 1, g: 1, b: 1, a: 1}
+    - _HTint: {r: 0.47735056, g: 3.523293, b: 0, a: 1}
+    - _HaloTint: {r: 2.4840214, g: 0.70228875, b: 0, a: 0.42745098}
+    - _LTint: {r: 0, g: 0.37450984, b: 0.08418288, a: 0.38431373}
+    - _LightTint: {r: 2.1185474, g: 0.47882867, b: 0, a: 0.5254902}
+    - _Tint: {r: 1, g: 0.94587564, b: 0.9009434, a: 1}
+    - _Vector0: {r: 0.05, g: 0, b: 0, a: 0}
+    - _Vector1: {r: 5.86, g: -2, b: 0, a: 0}
+    - _Vector2: {r: -1, g: -0.2, b: 0, a: 0}
+    - _Vectora: {r: -1, g: -0.5, b: 0, a: 0}
+    - _max: {r: 0, g: 0.0001, b: 0, a: 0}
+    - _min: {r: -1, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f81beb769fbbf47b956f7e2d8d389a, type: 3}
+  m_Name: SO_ThornsCoating
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemID: ThornsCoating
+  displayName: Thorns Coating
+  description: 'Reflects 20% melee dmg to attacker '
+  rarity: 1
+  requiredSlotType: 0
+  icon: {fileID: 21300000, guid: 5daec260acba44840800401092a0df2c, type: 3}
+  passiveEffects:
+  - {fileID: 11400000, guid: 63914762271cff845a5cc150e3f4b5ee, type: 2}
+  activeEffect: {fileID: 0}
+  maxStackSize: 1
+  worldPrefab: {fileID: 989638299112719969, guid: 1e8c605319bea8741baf1ef2150048e8, type: 3}
+  _tags: 06000000
+  _worldVisualPrefab: {fileID: 679175305638610189, guid: 9ce3ce6e2de94174e9f86eed9ac3dc45, type: 3}

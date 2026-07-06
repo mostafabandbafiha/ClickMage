@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f81beb769fbbf47b956f7e2d8d389a, type: 3}
+  m_Name: SO_HeavyStone
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemID: HeavyStone
+  displayName: Heavy Stone
+  description: +20% damage / -10% attack speed
+  rarity: 0
+  requiredSlotType: 0
+  icon: {fileID: 21300000, guid: b65b723975626b0409db403f3f7914a9, type: 3}
+  passiveEffects:
+  - {fileID: 11400000, guid: 0683749236f92314fa68d26c11516066, type: 2}
+  - {fileID: 11400000, guid: 1a0f2a08e6c29b84591a9051f832ec21, type: 2}
+  activeEffect: {fileID: 0}
+  maxStackSize: 1
+  worldPrefab: {fileID: 989638299112719969, guid: 484944d1cf983d441bcfa76c7d1f82ab, type: 3}
+  _tags: 06000000
+  _worldVisualPrefab: {fileID: 2935860773430467619, guid: f6ee8bf98888d4649ab3e8f1a6a9ddcf, type: 3}

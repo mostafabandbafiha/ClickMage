@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: FakeLight_Particle1
+  m_Shader: {fileID: 4800000, guid: 0fa659ac375687e4d8b9ca17108ed342, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _PARTICLEMODE_ON
+  - ___FLICKERING____ON
+  - ___HALO____ON
+  m_InvalidKeywords:
+  - _RECEIVESHADOWS_OFF
+  - _RECEIVE_SHADOWS_OFF
+  - ___DISTANCEFADE____ON
+  - ___PARTICLEMODE____ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _ColorGradient:
+        m_Texture: {fileID: 3342436360307218768, guid: 95801a53599a6c344a1224cfd935c031,
+          type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GradientTexture:
+        m_Texture: {fileID: 2800000, guid: 779931d3f36adac45ae9a3806d7b688e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTexture:
+        m_Texture: {fileID: 2800000, guid: 32a4c22345786dd43886feb67b1ac7e2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureGradient:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - DayAlpha: 0
+    - DistanceFade: 0
+    - _AlphaCutoff: 0.5
+    - _CloseFade: 0
+    - _CloseTransition: 0
+    - _DayAlpha: 0
+    - _DayAlpha1: 0
+    - _EXPERIMENTALShadows: 0
+    - _FadeDistance: 80.3
+    - _FadeOffset: 38
+    - _FarFade: 400
+    - _FarTransition: 100
+    - _FlickerHardness: 0.58
+    - _FlickerIntensity: 0.483
+    - _FlickerRadius: 1
+    - _FlickerSoftness: 0.5
+    - _FlickerSpeed: 2.08
+    - _Flickering: 1
+    - _HaloPosterize: 46.1
+    - _HaloPower: 1
+    - _HaloSize: 1.56
+    - _HaloSoftness: 0.5
+    - _Hardness: 0.526
+    - _LightPosterize: 75.4
+    - _LightRadius: 1
+    - _LightSoftness: 0.531
+    - _Noise: 1
+    - _NoiseMovement: 0.559
+    - _NoiseScale: 0.524
+    - _Noisiness: 0.452
+    - _NormalIntensity: 0.323
+    - _NormalsBlend: 0
+    - _NormalsBlending: 0.069
+    - _NormalsSoftness: 0.467
+    - _ParticleMesh: 1
+    - _ParticleMode: 1
+    - _Posterize: 74.9
+    - _PosterizeHalo: 96.1
+    - _PosterizeLight: 57
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _Radius: 0.82
+    - _RadiusFlickering: 0.355
+    - _ReceiveShadows: 0
+    - _ShadingBlend: 0.5
+    - _ShadingSoftness: 0.5
+    - _SizeFlickering: 0.38
+    - _Softness: 0.564
+    - _Spacing: 2
+    - _StartDistance: 400
+    - _StepSpacing: 3
+    - _TransitionDistance: 50
+    - _UseLightNormal: 0.5
+    - _UseTextureGradient: 1
+    - __DayAlpha___: 0
+    - __HEAVYShadows: 0
+    - ___DayAlpha___: 0
+    - ___DistanceFade___: 1
+    - ___Flickering___: 1
+    - ___Halo___: 1
+    - ___Noise___: 0
+    - ___ParticleMode___: 1
+    - _closeFadeDistance: 0
+    - _closeFadeTransition: 0
+    - _farFadeDistance: 400
+    - _farFadeTransition: 50
+    - _randomOffset: 0
+    m_Colors:
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HTint: {r: 1, g: 1, b: 1, a: 1}
+    - _HaloTint: {r: 0, g: 3.628164, b: 5.467094, a: 1}
+    - _LTint: {r: 1, g: 1, b: 1, a: 1}
+    - _LightTint: {r: 0.026610898, g: 0.046952497, b: 0.24528301, a: 0.89411765}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

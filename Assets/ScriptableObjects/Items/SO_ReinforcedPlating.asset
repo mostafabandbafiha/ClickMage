@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f81beb769fbbf47b956f7e2d8d389a, type: 3}
+  m_Name: SO_ReinforcedPlating
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemID: ReinforcedPlating
+  displayName: Reinforced Plating
+  description: +15 armor / +200 HP
+  rarity: 1
+  requiredSlotType: 0
+  icon: {fileID: 21300000, guid: be0bbdbb2d0ea6f4280212ab63891194, type: 3}
+  passiveEffects:
+  - {fileID: 11400000, guid: 93c1d7e2c2ddb8741a05fdb3f2c74858, type: 2}
+  - {fileID: 11400000, guid: 3a6f1542d1e2982499de03e109f6f3e5, type: 2}
+  activeEffect: {fileID: 0}
+  maxStackSize: 1
+  worldPrefab: {fileID: 989638299112719969, guid: a0cb765c269d41f479655d0fa5f311ed, type: 3}
+  _tags: 06000000
+  _worldVisualPrefab: {fileID: 7095345290613409527, guid: 3b60cfdbb6f756c419fbd515db4525ab, type: 3}
