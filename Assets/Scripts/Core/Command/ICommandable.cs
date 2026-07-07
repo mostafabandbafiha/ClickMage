@@ -1,3 +1,5 @@
+using ClickMage.Interface;
+
 public interface ICommandable<TCharacter> where TCharacter : BaseCharacter
 {
     void GiveCommand(ICommand<TCharacter> command);

@@ -1,4 +1,5 @@
 // PlagueCaster.cs
+using ClickMage.Interface;
 using ClickMage.Stats;
 using deVoid.Utils;
 using System.Collections.Generic;
@@ -32,10 +33,15 @@ public class PlagueCaster : EnemyCharacter
     {
         return new BehaviorTree<BaseCharacter>(
             new SelectorNode<BaseCharacter>(
-                new ArcherSeekBehaviorNode(), // same seek logic works for any ranged enemy
-                new WanderBehaviorNode() // safety fallback if no target exists (e.g. no Castle placed)
+                 new AcquireCombatTargetNode(),
+                 new ScoredAdvanceNode()
             )
         );
+    }
+
+    public override ICommand<BaseCharacter> CreateAttackCommand(Targetable target)
+    {
+        return new RangedAttackCommand(target, this);
     }
 
     // Called by animation event

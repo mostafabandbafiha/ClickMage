@@ -1,4 +1,5 @@
 ﻿// NightmareShaman.cs � no aura code at all
+using ClickMage.Interface;
 using ClickMage.Stats;
 using deVoid.Utils;
 using UnityEngine;
@@ -20,10 +21,15 @@ public class NightmareShaman : EnemyCharacter
     {
         return new BehaviorTree<BaseCharacter>(
             new SelectorNode<BaseCharacter>(
-                new ArcherSeekBehaviorNode(), // same seek logic works for any ranged enemy
-                new WanderBehaviorNode() // safety fallback if no target exists (e.g. no Castle placed)
+                 new AcquireCombatTargetNode(),
+                 new ScoredAdvanceNode()
             )
         );
+    }
+
+    public override ICommand<BaseCharacter> CreateAttackCommand(Targetable target)
+    {
+        return new RangedAttackCommand(target, this);
     }
 
     public override void OnAttack()

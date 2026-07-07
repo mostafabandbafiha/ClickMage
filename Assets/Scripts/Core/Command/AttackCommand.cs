@@ -1,6 +1,7 @@
 ﻿// AttackCommand.cs — generic attack-loop command (was EnemyAttackCommand).
 // Works for goblins, heroes, anything that's a CombatCharacter.
 using ClickMage.Animation;
+using ClickMage.Interface;
 using ClickMage.Stats;
 using UnityEngine;
 public class AttackCommand : ICommand<BaseCharacter>
@@ -27,11 +28,20 @@ public class AttackCommand : ICommand<BaseCharacter>
             IsComplete = true;
             return;
         }
+
+        if (!_target.TryEngage(_attackerGO))
+        {
+            // Slot filled between selection and start — bail, let AI re-select next tick.
+            IsComplete = true;
+            character.StateMachine.ChangeState(new CharacterIdleState());
+            character.QueueCommand(new SeekAgainCommand());
+            return;
+        }
+
         _targetCollider = _target.GetComponent<Collider>();
         _attacker.CurrentTarget = _target;
         character.StopMoving();
         character.StateMachine.ChangeState(new CombatAttackState());
-        // Attack immediately on first contact
         PlayAttackAnimation(character);
         _attackTimer = 0f;
     }

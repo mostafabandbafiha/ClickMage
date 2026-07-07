@@ -5,6 +5,7 @@ using ClickMage.Animation;
 using ClickMage.Entities;
 using ClickMage.Stats;
 using System.Collections.Generic;
+using ClickMage.Interface;
 
 public abstract class BaseCharacter : BaseEntity, ICommandable<BaseCharacter>
 {

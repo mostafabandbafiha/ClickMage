@@ -28,6 +28,12 @@
 // engages a structure (MoveToTargetCommand + AttackCommand queued), the
 // behavior tree structurally can't re-tick until that command pair finishes —
 // the same "busy = do nothing" guarantee used everywhere else in the tree.
+//
+// Post-Castle fallback: once the Castle is destroyed, there's nothing left to
+// orient the forward cone toward, so we fall back to the nearest live
+// Targetable (via TargetRegistry) for both heading and cone scoring. If even
+// that comes up empty, the enemy keeps its current forward heading rather
+// than freezing in place.
 using ClickMage.Entities;
 using ClickMage.Stats;
 using UnityEngine;
@@ -52,14 +58,39 @@ public class ScoredAdvanceNode : IBehaviorNode<BaseCharacter>
 
         var castle = Castle.Instance;
         var castleTargetable = castle != null ? castle.GetComponent<Targetable>() : null;
-        if (castleTargetable == null || !castleTargetable.IsAlive) return false;
+        bool castleValid = castleTargetable != null && castleTargetable.IsAlive;
 
-        Vector3 toCastle = castleTargetable.Position - owner.transform.position;
-        toCastle.y = 0f;
-        if (toCastle.sqrMagnitude < 0.01f)
-            return EngageCastle(enemy, castleTargetable);
+        Targetable fallbackTarget = null;
+        Vector3 forward;
 
-        Vector3 forward = Quaternion.Euler(0, enemy.PersonalHeadingBiasDegrees, 0) * toCastle.normalized;
+        if (castleValid)
+        {
+            Vector3 toCastle = castleTargetable.Position - owner.transform.position;
+            toCastle.y = 0f;
+            if (toCastle.sqrMagnitude < 0.01f)
+                return EngageCastle(enemy, castleTargetable);
+
+            forward = Quaternion.Euler(0, enemy.PersonalHeadingBiasDegrees, 0) * toCastle.normalized;
+        }
+        else
+        {
+            // No castle to orient toward — fall back to nearest valid target's
+            // direction, or failing that, the enemy's current facing.
+            fallbackTarget = FindNearestTargetable(enemy);
+            if (fallbackTarget != null)
+            {
+                Vector3 toTarget = fallbackTarget.Position - owner.transform.position;
+                toTarget.y = 0f;
+                if (toTarget.sqrMagnitude < 0.01f)
+                    return EngageStructure(enemy, fallbackTarget);
+
+                forward = Quaternion.Euler(0, enemy.PersonalHeadingBiasDegrees, 0) * toTarget.normalized;
+            }
+            else
+            {
+                forward = Quaternion.Euler(0, enemy.PersonalHeadingBiasDegrees, 0) * owner.transform.forward;
+            }
+        }
 
         if (!grid.WorldToGrid(owner.transform.position, out int myCol, out int myRow)) return false;
 
@@ -85,10 +116,10 @@ public class ScoredAdvanceNode : IBehaviorNode<BaseCharacter>
                 if (dist < 0.01f) continue;
 
                 float angle = Vector3.Angle(forward, dir);
-                if (angle > ConeHalfAngleDegrees) continue; // outside forward cone
+                if (angle > ConeHalfAngleDegrees) continue;
 
                 var cell = grid.GetCell(col, row);
-                bool isCastleCell = cell.Structure == castle.gameObject;
+                bool isCastleCell = castleValid && cell.Structure == castle.gameObject;
                 GameObject structureHere = null;
                 float score;
 
@@ -106,13 +137,8 @@ public class ScoredAdvanceNode : IBehaviorNode<BaseCharacter>
                     score = EmptyScore;
                 }
 
-                // Additive, not multiplicative — a cell dead ahead (angle=0) gets the
-                // full bonus, one at the cone's edge gets none. Additive keeps the
-                // sign of EmptyScore intact; multiplying a negative value by a
-                // shrinking alignment factor would backwards-prefer off-angle cells.
                 float alignment = 1f - (angle / ConeHalfAngleDegrees);
                 score += alignment * AlignmentBonusWeight;
-
                 score -= dist * DistanceTiebreakWeight;
 
                 if (score > bestScore)
@@ -126,7 +152,19 @@ public class ScoredAdvanceNode : IBehaviorNode<BaseCharacter>
             }
         }
 
-        if (!foundAny) return false;
+        if (!foundAny)
+        {
+            // Nothing in the cone at all (e.g. no castle, no structures nearby,
+            // fallback target far away) — engage the fallback target directly if
+            // we have one, otherwise keep walking the current heading instead of
+            // freezing.
+            if (!castleValid && fallbackTarget != null)
+                return EngageStructure(enemy, fallbackTarget);
+
+            Vector3 keepGoing = owner.transform.position + forward.normalized * 1f;
+            enemy.GiveAutonomousCommand(new MoveCommand(keepGoing, 0.5f));
+            return true;
+        }
 
         if (bestIsCastle)
             return EngageCastle(enemy, castleTargetable);
@@ -138,11 +176,39 @@ public class ScoredAdvanceNode : IBehaviorNode<BaseCharacter>
                 return EngageStructure(enemy, targetable);
         }
 
-        // Best option in view was an empty cell — take one step toward it.
         Vector3 stepTarget = grid.GridToWorld(bestCell.x, bestCell.y);
         enemy.GiveAutonomousCommand(new MoveCommand(stepTarget, 0.5f));
         return true;
     }
+
+
+
+    private static bool EngageCastle(EnemyCharacter enemy, Targetable castleTargetable)
+    {
+        enemy.CurrentTarget = castleTargetable;
+        enemy.GiveAutonomousCommand(new MoveToTargetCommand(castleTargetable, enemy));
+        enemy.QueueCommand(enemy.CreateAttackCommand(castleTargetable));
+        return true;
+    }
+
+    private static bool EngageStructure(EnemyCharacter enemy, Targetable targetable)
+    {
+        enemy.CurrentTarget = targetable;
+        enemy.GiveAutonomousCommand(new MoveToTargetCommand(targetable, enemy));
+        enemy.QueueCommand(enemy.CreateAttackCommand(targetable));
+        return true;
+    }
+
+    /// <summary>Nearest alive, capacity-available Targetable belonging to the
+    /// Player faction — used only as a fallback once the Castle is gone, so
+    /// enemies keep engaging instead of idling or piling onto a full target.</summary>
+    private static Targetable FindNearestTargetable(EnemyCharacter enemy)
+    {
+        return TargetRegistry.Instance != null
+            ? TargetRegistry.Instance.GetNearestEngageable(Faction.Player, enemy.transform.position)
+            : null;
+    }
+
 
     /// <summary>0 for a full-health structure, up to FocusFireBonusWeight as it
     /// nears 0 HP. Returns 0 if the structure has no Health/MaxHealth stats —
@@ -158,23 +224,5 @@ public class ScoredAdvanceNode : IBehaviorNode<BaseCharacter>
 
         float healthFraction = Mathf.Clamp01(entity.GetStatValue(CommonStats.Health) / maxHp);
         return (1f - healthFraction) * FocusFireBonusWeight;
-    }
-
-    private static bool EngageCastle(EnemyCharacter enemy, Targetable castleTargetable)
-    {
-        if (!castleTargetable.TryEngage(enemy.gameObject)) return false;
-        enemy.CurrentTarget = castleTargetable;
-        enemy.GiveAutonomousCommand(new MoveToTargetCommand(castleTargetable, enemy));
-        enemy.QueueCommand(new AttackCommand(castleTargetable, enemy));
-        return true;
-    }
-
-    private static bool EngageStructure(EnemyCharacter enemy, Targetable targetable)
-    {
-        if (!targetable.TryEngage(enemy.gameObject)) return false;
-        enemy.CurrentTarget = targetable;
-        enemy.GiveAutonomousCommand(new MoveToTargetCommand(targetable, enemy));
-        enemy.QueueCommand(new AttackCommand(targetable, enemy));
-        return true;
     }
 }

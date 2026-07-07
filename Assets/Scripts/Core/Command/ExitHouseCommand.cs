@@ -1,4 +1,5 @@
 using ClickMage.Animation;
+using ClickMage.Interface;
 using UnityEngine;
 
 public class ExitHouseCommand : ICommand<BaseCharacter>

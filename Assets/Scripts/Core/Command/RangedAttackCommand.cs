@@ -1,5 +1,6 @@
 // ArcherAttackCommand.cs
 using ClickMage.Animation;
+using ClickMage.Interface;
 using ClickMage.Stats;
 using UnityEngine;
 
@@ -31,15 +32,22 @@ public class RangedAttackCommand : ICommand<BaseCharacter>
             return;
         }
 
+        if (!_target.TryEngage(_attackerGO))
+        {
+            IsComplete = true;
+            character.StateMachine.ChangeState(new CharacterIdleState());
+            character.QueueCommand(new SeekAgainCommand());
+            return;
+        }
+
         _enemy.CurrentTarget = _target;
         _targetCollider = _target.GetComponent<Collider>();
         _attackTimer = 0f;
         character.StopMoving();
         character.StateMachine.ChangeState(new RangedAttackState());
-
-        // Fire immediately on first contact
         PlayAttackAnimation(character);
     }
+
 
     public void Tick(BaseCharacter character, float deltaTime)
     {

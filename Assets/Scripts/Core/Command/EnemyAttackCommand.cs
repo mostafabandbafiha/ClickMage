@@ -1,5 +1,6 @@
 // EnemyAttackCommand.cs
 using ClickMage.Animation;
+using ClickMage.Interface;
 using ClickMage.Stats;
 using UnityEngine;
 

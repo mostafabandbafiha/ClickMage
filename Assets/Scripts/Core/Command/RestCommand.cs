@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ClickMage.Interface;
+using UnityEngine;
 
 public class RestCommand : ICommand<BaseCharacter>
 {

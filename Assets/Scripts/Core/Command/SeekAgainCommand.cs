@@ -1,4 +1,6 @@
 ﻿// SeekAgainCommand.cs
+using ClickMage.Interface;
+
 public class SeekAgainCommand : ICommand<BaseCharacter>
 {
     public bool IsComplete { get; private set; }

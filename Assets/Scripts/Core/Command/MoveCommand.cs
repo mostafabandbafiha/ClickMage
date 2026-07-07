@@ -1,4 +1,5 @@
 // MoveCommand.cs
+using ClickMage.Interface;
 using System;
 using UnityEngine;
 using UnityEngine.AI;

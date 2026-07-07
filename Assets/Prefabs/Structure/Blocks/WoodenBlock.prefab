@@ -92,6 +92,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntityTargetable
   maxCapacity: 10
   faction: 0
+  pulseDuration: 0.5
+  pulseCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &4197135457939294305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WoodenBlock
   statAssets: []
   maxSlots: 4
-  structureDefinition: {fileID: 0}
+  structureDefinition: {fileID: 11400000, guid: 38ae151007c25ce40b496676f947bc71, type: 2}
   health: {fileID: 11400000, guid: b8e689666629a00449d3c9599e276738, type: 2}
   maxHealth: {fileID: 11400000, guid: 3ab71f4d1c572234e9e3da8214606643, type: 2}
   defense: {fileID: 0}
@@ -124,6 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   SlotCount: 4
+  _startingItems: []
 --- !u!114 &8736588685488762339
 MonoBehaviour:
   m_ObjectHideFlags: 0

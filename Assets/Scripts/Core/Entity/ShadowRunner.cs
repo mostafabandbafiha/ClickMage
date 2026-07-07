@@ -20,8 +20,8 @@ public class ShadowRunner : EnemyCharacter
     {
         return new BehaviorTree<BaseCharacter>(
             new SelectorNode<BaseCharacter>(
-                new AttackSeekBehaviorNode(), // melee seek/attack flow
-                new WanderBehaviorNode() // safety fallback if no target exists (e.g. no Castle placed)
+                new AcquireCombatTargetNode(),
+                new ScoredAdvanceNode()
             )
         );
     }

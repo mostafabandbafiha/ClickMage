@@ -1,3 +1,4 @@
+using ClickMage.Interface;
 using System;
 using System.Collections.Generic;
 using UnityEngine;

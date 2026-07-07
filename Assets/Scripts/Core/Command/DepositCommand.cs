@@ -1,3 +1,4 @@
+using ClickMage.Interface;
 using UnityEngine;
 
 public class DepositCommand : ICommand<BaseCharacter>

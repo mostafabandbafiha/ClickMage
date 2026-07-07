@@ -34,7 +34,12 @@ public abstract class Block : BaseEntity
         // Without this, GridData kept showing this cell as occupied (with a stale
         // Structure reference) forever after the Block died — anything reading the
         // grid to decide where it can walk/what's in its way would be wrong.
-        BuildModeController.Instance?.FreeStructureFootprint(gameObject);
+        BuildModeController.Instance?.FreeStructureFootprint(gameObject, OnFreeFootPrint);
+        //Destroy(gameObject);
+    }
+
+    public void OnFreeFootPrint()
+    {
         Destroy(gameObject);
     }
 

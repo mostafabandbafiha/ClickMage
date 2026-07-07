@@ -1,5 +1,8 @@
 ﻿// EnemyCharacter.cs — clean abstract base, no assumptions about behavior
+
+using ClickMage.Interface;
 using UnityEngine;
+
 public abstract class EnemyCharacter : CombatCharacter
 {
     public enum DeathCause { KilledByCommander, KilledByPlayer }
@@ -37,5 +40,10 @@ public abstract class EnemyCharacter : CombatCharacter
     {
         OnDeath?.Invoke(this);
         Destroy(gameObject);
+    }
+
+    public virtual ICommand<BaseCharacter> CreateAttackCommand(Targetable target)
+    {
+        return new AttackCommand(target, this);
     }
 }

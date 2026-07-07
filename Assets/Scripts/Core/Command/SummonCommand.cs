@@ -1,4 +1,6 @@
 // SummonCommand.cs
+using ClickMage.Interface;
+
 public class SummonCommand : ICommand<BaseCharacter>
 {
     private readonly AbyssalHorror _horror;

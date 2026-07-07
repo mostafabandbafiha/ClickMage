@@ -1,4 +1,5 @@
 ﻿// SkeletonArcher.cs
+using ClickMage.Interface;
 using ClickMage.Stats;
 using deVoid.Utils;
 using System.Collections.Generic;
@@ -30,10 +31,15 @@ public class SkeletonArcher : EnemyCharacter
     {
         return new BehaviorTree<BaseCharacter>(
             new SelectorNode<BaseCharacter>(
-                new ArcherSeekBehaviorNode(),
-                new WanderBehaviorNode() // safety fallback if no target exists (e.g. no Castle placed)
+                 new AcquireCombatTargetNode(),
+                 new ScoredAdvanceNode()
             )
         );
+    }
+
+    public override ICommand<BaseCharacter> CreateAttackCommand(Targetable target)
+    {
+        return new RangedAttackCommand(target, this);
     }
 
     // Called by animation event on the shoot frame

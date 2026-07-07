@@ -33,8 +33,8 @@ public class AbyssalHorror : EnemyCharacter
         return new BehaviorTree<BaseCharacter>(
             new SelectorNode<BaseCharacter>(
                 new SummonBehaviorNode(),   // highest priority — summon if can
-                new AttackSeekBehaviorNode(), // fallback — melee attack
-                new WanderBehaviorNode() // safety fallback if no target exists (e.g. no Castle placed)
+                new AcquireCombatTargetNode(),
+                new ScoredAdvanceNode()
             )
         );
     }

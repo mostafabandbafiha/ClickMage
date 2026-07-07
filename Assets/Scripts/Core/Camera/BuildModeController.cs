@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -488,7 +489,7 @@ public class BuildModeController : MonoBehaviour
     /// a structure is destroyed — placement/move already calls grid.FreeFootprint()
     /// directly, but nothing previously did this on death, so destroyed Blocks kept
     /// showing as occupied on the grid forever (stale Structure reference too).</summary>
-    public void FreeStructureFootprint(GameObject structure)
+    public void FreeStructureFootprint(GameObject structure, Action OnFreeFootPrint)
     {
         if (structure == null || grid == null) return;
         var placementData = structure.GetComponent<StructurePlacementData>();
@@ -502,6 +503,10 @@ public class BuildModeController : MonoBehaviour
             footprint.Add(new Vector2Int(placementData.AnchorCell.x + rotated.x, placementData.AnchorCell.y + rotated.y));
         }
         grid.FreeFootprint(footprint);
+        OnFreeFootPrint?.Invoke();
+
+        if (navMeshSurface != null)
+            navMeshSurface.BuildNavMesh();
     }
 
     private List<Vector2Int> GetRotatedFootprint(Vector2Int anchorCell)

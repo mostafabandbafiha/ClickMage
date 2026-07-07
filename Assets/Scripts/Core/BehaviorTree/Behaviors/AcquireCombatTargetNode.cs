@@ -18,23 +18,29 @@ public class AcquireCombatTargetNode : IBehaviorNode<BaseCharacter>
     {
         if (owner is not EnemyCharacter enemy) return false;
 
+        // Priority: Hero within aggro radius, then a Tower currently attacking me,
+        // then whatever's nearest and engageable in range.
         Targetable target = null;
 
-        // Priority: Hero within aggro radius, then a Tower currently attacking me.
         if (enemy.EngagesHeroes)
             target = FindNearestHero(enemy);
 
         if (target == null && enemy.EngagesTowersAttackingMe)
             target = FindTowerAttackingMe(enemy);
 
+        if (target == null)
+            target = TargetRegistry.Instance.GetNearestEngageableInRange(
+                Faction.Player, enemy.transform.position, enemy.AggroRadius);
+
         if (target == null) return false;
-        if (!target.TryEngage(enemy.gameObject)) return false;
 
         enemy.CurrentTarget = target;
         enemy.GiveAutonomousCommand(new MoveToTargetCommand(target, enemy));
-        enemy.QueueCommand(new AttackCommand(target, enemy));
+        enemy.QueueCommand(enemy.CreateAttackCommand(target));
+
         return true;
     }
+
 
     private static Targetable FindNearestHero(EnemyCharacter enemy)
     {

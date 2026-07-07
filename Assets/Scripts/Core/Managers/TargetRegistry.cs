@@ -75,6 +75,43 @@ public class TargetRegistry : MonoBehaviour
         return nearest;
     }
 
+    public Targetable GetNearestEngageable(Faction faction, Vector3 worldPos)
+    {
+        if (!_registry.TryGetValue(faction, out var set)) return null;
+        Targetable nearest = null;
+        float nearestSq = float.MaxValue;
+        foreach (var t in set)
+        {
+            if (t == null || !t.IsAlive) continue;
+            if (IsInvisible(t)) continue;
+            if (!t.HasCapacity) continue; // skip full targets
+
+            float sq = (t.transform.position - worldPos).sqrMagnitude;
+            if (sq < nearestSq) { nearestSq = sq; nearest = t; }
+        }
+        return nearest;
+    }
+
+    public Targetable GetNearestEngageableInRange(Faction faction, Vector3 worldPos, float range)
+    {
+        if (!_registry.TryGetValue(faction, out var set)) return null;
+        Targetable nearest = null;
+        float nearestSq = float.MaxValue;
+        float rangeSq = range * range;
+        foreach (var t in set)
+        {
+            if (t == null || !t.IsAlive) continue;
+            if (IsInvisible(t)) continue;
+            if (!t.HasCapacity) continue;
+
+            float sq = (t.transform.position - worldPos).sqrMagnitude;
+            if (sq > rangeSq) continue;
+            if (sq < nearestSq) { nearestSq = sq; nearest = t; }
+        }
+        return nearest;
+    }
+
+
     public bool HasLivingTargets(Faction faction)
     {
         if (!_registry.TryGetValue(faction, out var set)) return false;

@@ -22,8 +22,8 @@ public class SiegeGolem : EnemyCharacter
     {
         return new BehaviorTree<BaseCharacter>(
             new SelectorNode<BaseCharacter>(
-                new AttackSeekBehaviorNode(),
-                new WanderBehaviorNode() // safety fallback if no target exists (e.g. no Castle placed)
+                new AcquireCombatTargetNode(),
+                new ScoredAdvanceNode()
             )
         );
     }

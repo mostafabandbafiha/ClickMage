@@ -1,4 +1,5 @@
 // MoveToTargetCommand.cs — generic for any CombatCharacter (Enemy or Hero)
+using ClickMage.Interface;
 using ClickMage.Stats;
 using UnityEngine;
 
