@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ClickMage.Entities;
+using UnityEngine;
 
 namespace ClickMage.Stats
 {
@@ -141,6 +142,28 @@ namespace ClickMage.Stats
                 HarvestPower => "Harvest Power",
                 _ => statKey
             };
+        }
+
+        public static DamageType ResolveElements(BaseEntity entity)
+        {
+            DamageType result = DamageType.Normal;
+
+            if (entity.GetStatValueSafe(FireOnHitDamage) > 0f)
+                result |= DamageType.Fire;
+
+            if (entity.GetStatValueSafe(FrostDamage) > 0f)
+                result |= DamageType.Frost;
+
+            if (entity.GetStatValueSafe(LightningDamage) > 0f)
+                result |= DamageType.Lightning;
+
+            if (entity.GetStatValueSafe(BleedDamage) > 0f)
+                result |= DamageType.Bleed;
+
+            if (entity.GetStatValueSafe(HasPoison) > 0f)
+                result |= DamageType.Poison;
+
+            return result;
         }
     }
 }

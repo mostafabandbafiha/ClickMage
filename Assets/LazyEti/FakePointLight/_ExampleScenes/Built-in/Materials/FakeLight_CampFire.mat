@@ -171,7 +171,7 @@ Material:
     - _Spacing: 2
     - _SpecIntensity: 0.5
     - _SpecularHighlight: 0
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _StartDistance: 400
     - _StartFadeDistance: 100
     - _StartFadeOffset: 50

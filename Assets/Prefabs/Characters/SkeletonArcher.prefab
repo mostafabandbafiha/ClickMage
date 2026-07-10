@@ -92,16 +92,25 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8bb9d6792b22eeb46a66859591959eab, type: 2}
   - {fileID: 11400000, guid: d315e968bff6ccc44ba57e0e94d541ff, type: 2}
   - {fileID: 11400000, guid: 6f9b71819034cdc4bb715bcd8a3a2993, type: 2}
+  - {fileID: 11400000, guid: 6f9b71819034cdc4bb715bcd8a3a2993, type: 2}
   maxSlots: 4
   rotationSpeed: 10
   playerControlTimeout: 30
   behaviorTreeTickInterval: 3
   movementThreshold: 0.1
+  guardReturnThreshold: 3
+  activityRadius: 15
+  wanderIdleMin: 2
+  wanderIdleMax: 5
   _targetFaction: 0
+  aggroRadius: 12
+  engageHeroes: 1
+  engageTowersAttackingMe: 1
+  personalHeadingBiasRange: 15
   _data: {fileID: 11400000, guid: 249bbe08f9d96854bab99c97ace7e07d, type: 2}
   _gravePrefab: {fileID: 4182190248025263251, guid: 32b1bdfcc27c4534cacff1b59b2547a2, type: 3}
-  _arrowPrefab: {fileID: 7266010323321817951, guid: 83c6d49f7241b914b9c85885b568b102, type: 3}
   _firePoint: {fileID: 8062288429364713046}
+  _arrowRegistry: {fileID: 11400000, guid: ca6aaec5470ded94ab66bdcc3e04fbef, type: 2}
   attackDamage: {fileID: 11400000, guid: 6f9b71819034cdc4bb715bcd8a3a2993, type: 2}
   attackRange: {fileID: 11400000, guid: ded8aa0ebe4c5584cbf190dc8e6b5fad, type: 2}
   attackCooldown: {fileID: 11400000, guid: 8bb9d6792b22eeb46a66859591959eab, type: 2}
@@ -175,6 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
   animator: {fileID: 4644103583589341405}
+  crossFadeDuration: 0.15
 --- !u!195 &1035364186736838931
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -184,7 +194,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2131516909962950399}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 2
+  m_Radius: 1.5
   m_Speed: 0.6
   m_Acceleration: 8
   avoidancePriority: 50
@@ -303,15 +313,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: dba62062d2a0b1a4f83a0553f36d2bce, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5.5432
+      value: 4.367321
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dba62062d2a0b1a4f83a0553f36d2bce, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5.5432
+      value: 4.367321
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dba62062d2a0b1a4f83a0553f36d2bce, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5.5432
+      value: 4.367321
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dba62062d2a0b1a4f83a0553f36d2bce, type: 3}
       propertyPath: m_LocalPosition.x

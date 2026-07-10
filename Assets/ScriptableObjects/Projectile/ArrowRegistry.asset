@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 655a1f0e50fa105479d2f0e9ee13d786, type: 3}
+  m_Name: ArrowRegistry
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileRegistry
+  defaultPrefab: {fileID: 7266010323321817951, guid: 83c6d49f7241b914b9c85885b568b102, type: 3}
+  entries:
+  - Element: 1
+    Prefab: {fileID: 7266010323321817951, guid: 1fc3e841f1285ec46af2b2c211fcae91, type: 3}

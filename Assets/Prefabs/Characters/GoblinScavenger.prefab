@@ -73,6 +73,7 @@ MonoBehaviour:
   aggroRadius: 12
   engageHeroes: 1
   engageTowersAttackingMe: 1
+  personalHeadingBiasRange: 15
   _data: {fileID: 11400000, guid: 0925eb7d856aac64c90beaecf0bde517, type: 2}
   _gravePrefab: {fileID: 4182190248025263251, guid: 32b1bdfcc27c4534cacff1b59b2547a2, type: 3}
   attackPower: {fileID: 11400000, guid: 6f9b71819034cdc4bb715bcd8a3a2993, type: 2}
@@ -155,7 +156,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2131516909962950399}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 2
+  m_Radius: 1.5
   m_Speed: 0.6
   m_Acceleration: 8
   avoidancePriority: 50
@@ -167,7 +168,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 2
+  m_ObstacleAvoidanceType: 1
 --- !u!114 &5542260065347177330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,15 +263,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 3fe5cb6503d81ac4283eaa19c127f9ee, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5.952275
+      value: 4.5317645
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3fe5cb6503d81ac4283eaa19c127f9ee, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5.952275
+      value: 4.5317645
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3fe5cb6503d81ac4283eaa19c127f9ee, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5.952275
+      value: 4.5317645
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3fe5cb6503d81ac4283eaa19c127f9ee, type: 3}
       propertyPath: m_LocalPosition.x

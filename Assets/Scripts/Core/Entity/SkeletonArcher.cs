@@ -9,8 +9,8 @@ public class SkeletonArcher : EnemyCharacter
 {
     [SerializeField] private EnemyData _data;
     [SerializeField] private GameObject _gravePrefab;
-    [SerializeField] private GameObject _arrowPrefab;
     [SerializeField] private Transform _firePoint;
+    [SerializeField] private ProjectileRegistry _arrowRegistry; // holds arrow prefabs only
 
     [Header("Stats")]
     [SerializeField] private BaseStat attackDamage;
@@ -24,7 +24,7 @@ public class SkeletonArcher : EnemyCharacter
     protected override void Awake()
     {
         base.Awake();
-        if (_data != null) Agent.speed = _data.moveSpeed;
+        Agent.speed = GetStatValue(CommonStats.MoveSpeed);
     }
 
     protected override BehaviorTree<BaseCharacter> BuildBehaviorTree()
@@ -45,19 +45,16 @@ public class SkeletonArcher : EnemyCharacter
     // Called by animation event on the shoot frame
     public override void OnAttack()
     {
-        if (CurrentTarget == null || !CurrentTarget.IsAlive) return;
-        if (_arrowPrefab == null || _firePoint == null) return;
+        if (CurrentTarget == null || !CurrentTarget.IsAlive || _firePoint == null) return;
 
-        // Aim firepoint at target before spawning
         Vector3 dir = (CurrentTarget.Position - _firePoint.position);
         dir.y = 0;
-        if (dir != Vector3.zero)
-            _firePoint.rotation = Quaternion.LookRotation(dir);
+        if (dir != Vector3.zero) _firePoint.rotation = Quaternion.LookRotation(dir);
 
-        GameObject obj = Instantiate(_arrowPrefab, _firePoint.position, _firePoint.rotation);
-        Projectile projectile = obj.GetComponent<Projectile>();
-        if (projectile != null)
-            projectile.Initialize(CurrentTarget, GetStatValue(CommonStats.Damage), this);
+        ProjectileSpawner.Instance.Spawn(
+            this, _arrowRegistry, CurrentTarget, GetStatValue(CommonStats.Damage),
+            _firePoint.position, _firePoint.rotation);
+
     }
 
     public override void Die(DeathCause cause)

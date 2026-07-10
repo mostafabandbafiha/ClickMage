@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SO_MoveSpeed
   m_EditorClassIdentifier: Assembly-CSharp::ClickMage.Stats.BaseStat
   statKey: Entity.MoveSpeed
-  baseValue: 3
+  baseValue: 4

@@ -470,6 +470,44 @@ public class BuildModeController : MonoBehaviour
 
     // ── Grid helpers ───────────────────────────────────────────────────────
 
+    public void BuildNavMesh()
+    {
+        navMeshSurface.BuildNavMesh();
+    }
+
+    public bool TryPlaceStructureAt(StructureDefinition structure, Vector2Int anchorCell, int rotation)
+    {
+        var footprint = new List<Vector2Int>();
+        foreach (var offset in structure.GetFootprint())
+        {
+            Vector2Int rotated = RotateOffset(offset, rotation);
+            footprint.Add(new Vector2Int(anchorCell.x + rotated.x, anchorCell.y + rotated.y));
+        }
+
+        if (!grid.CanPlace(footprint))
+            return false;
+
+        grid.OccupyFootprint(footprint);
+
+        Vector3 worldPos = GetFootprintCenterPublic(anchorCell, footprint);
+        worldPos.y = 0f;
+
+        var placed = Instantiate(structure.Prefab, worldPos, Quaternion.Euler(0, rotation, 0));
+
+        var data = placed.AddComponent<StructurePlacementData>();
+        data.AnchorCell = anchorCell;
+        data.Rotation = rotation;
+
+        foreach (var c in footprint)
+            grid.GetCell(c.x, c.y).Structure = placed;
+
+        var house = placed.GetComponent<HouseStructure>();
+        if (house != null) house.OnPlaced();
+
+        return true;
+    }
+
+
     private bool TryGetCellUnderCursor(out Vector2Int cell)
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -534,6 +572,18 @@ public class BuildModeController : MonoBehaviour
 
         float count = footprint.Count;
         return new Vector3(sumX / count, 0f, sumZ / count);
+    }
+
+    private Vector3 GetFootprintCenterPublic(Vector2Int anchorCell, List<Vector2Int> footprint)
+    {
+        float sumX = 0f, sumZ = 0f;
+        foreach (var cell in footprint)
+        {
+            Vector3 cellWorld = grid.GridToWorld(cell.x, cell.y);
+            sumX += cellWorld.x;
+            sumZ += cellWorld.z;
+        }
+        return new Vector3(sumX / footprint.Count, 0f, sumZ / footprint.Count);
     }
 
     private void Rotate() => _rotation = (_rotation + 90) % 360;

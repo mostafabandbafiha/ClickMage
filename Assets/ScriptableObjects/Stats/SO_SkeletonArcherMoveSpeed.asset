@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SO_SkeletonArcherMoveSpeed
   m_EditorClassIdentifier: Assembly-CSharp::ClickMage.Stats.BaseStat
   statKey: Entity.MoveSpeed
-  baseValue: 2
+  baseValue: 4

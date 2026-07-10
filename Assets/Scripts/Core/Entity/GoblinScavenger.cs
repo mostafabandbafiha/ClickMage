@@ -17,7 +17,7 @@ public class GoblinScavenger : EnemyCharacter
     protected override void Awake()
     {
         base.Awake();
-        if (_data != null) Agent.speed = _data.moveSpeed;
+        Agent.speed = GetStatValue(CommonStats.MoveSpeed);
     }
 
     protected override BehaviorTree<BaseCharacter> BuildBehaviorTree()

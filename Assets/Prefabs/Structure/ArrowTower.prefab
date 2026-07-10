@@ -445,8 +445,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 11.919206, y: 17.678204, z: 10.723039}
-  m_Center: {x: -0.10459089, y: 8.339102, z: 0.17588377}
+  m_Size: {x: 8.367233, y: 17.678204, z: 10.723039}
+  m_Center: {x: 0.019836426, y: 8.339102, z: 0.17588377}
 --- !u!114 &-2657200139781911104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,8 +499,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifierVolume
   m_SerializedVersion: 0
-  m_Size: {x: 11.906815, y: 17.66055, z: 10.695555}
-  m_Center: {x: -0.123542786, y: 8.330275, z: 0.09445286}
+  m_Size: {x: 7.7026405, y: 17.66055, z: 10.695555}
+  m_Center: {x: 0.028154373, y: 8.330275, z: 0.09445286}
   m_Area: 1
   m_AffectedAgents: ffffffff
 --- !u!114 &4486132017013863534

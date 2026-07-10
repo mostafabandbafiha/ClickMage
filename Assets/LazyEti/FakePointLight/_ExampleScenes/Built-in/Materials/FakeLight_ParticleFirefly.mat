@@ -134,7 +134,7 @@ Material:
     - _Spacing: 3
     - _SpecIntensity: 0.5
     - _SpecularHighlight: 0
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _StartDistance: 400
     - _StepSpacing: 3
     - _TexturePacking: 0

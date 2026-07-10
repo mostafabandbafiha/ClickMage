@@ -15,14 +15,16 @@ public enum ItemTag
     Equipment,
 }
 
-
+[System.Flags]
 public enum DamageType
 {
-    Normal,
-    Fire,
-    Bleed,
-    Reflect,
-    // add more later: Poison, True, etc.
+    Normal = 0,
+    Fire = 1 << 0,
+    Frost = 1 << 1,
+    Lightning = 1 << 2,
+    Bleed = 1 << 3,
+    Poison = 1 << 4,
+    Reflect = 1 << 5,
 }
 
 /// <summary>

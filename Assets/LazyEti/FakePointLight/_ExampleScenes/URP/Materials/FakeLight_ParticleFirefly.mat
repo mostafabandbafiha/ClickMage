@@ -40,8 +40,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _ColorGradient:
-        m_Texture: {fileID: 3342436360307218768, guid: 95801a53599a6c344a1224cfd935c031,
-          type: 3}
+        m_Texture: {fileID: 3342436360307218768, guid: 95801a53599a6c344a1224cfd935c031, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GradientTexture:
@@ -138,7 +137,7 @@ Material:
     - _Spacing: 3
     - _SpecIntensity: 0.5
     - _SpecularHighlight: 0
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _StartDistance: 400
     - _StepSpacing: 3
     - _StepsSpacing: 1
@@ -168,3 +167,4 @@ Material:
     - _LightTint: {r: 0.075834274, g: 1, b: 0, a: 0.50980395}
     - _Tint: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
