@@ -74,7 +74,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   element: 0
-  hitVfxPrefab: {fileID: 6879983198033412599, guid: d75fde1dbf3e0b748b1317edd155e994, type: 3}
+  hitVfxPrefab: {fileID: 1148406988041044, guid: 1ae2b1c728484264bbdc53ecaee73c6a, type: 3}
   hitThreshold: 0.3
   stickDuration: 2
   _target: {fileID: 0}

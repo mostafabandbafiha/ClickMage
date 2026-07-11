@@ -22,12 +22,15 @@ public class DayNightCycleManager : MonoBehaviour
     [SerializeField] private bool useManualControl = false;
     [SerializeField, Range(0f, 1f)] private float manualTimeProgress = 0f;
 
+
+
     // ── Public state ──────────────────────────────────────────────
     public TimeOfDay CurrentTimeOfDay { get; private set; }
     public TimeOfDay NextTimeOfDay { get; private set; }
     public float TransitionProgress { get; private set; } // 0-1 during blend
     public bool IsTransitioning { get; private set; }
     public float PhaseProgress { get; private set; } // 0-1 inside current phase
+    public float CurrentPhaseTimeRemaining { get; private set; } // NEW: seconds left until next phase fully starts
 
     // ── Events ────────────────────────────────────────────────────
     /// Fired once when a new phase STARTS (after transition completes)
@@ -128,6 +131,7 @@ public class DayNightCycleManager : MonoBehaviour
 
         PhaseProgress = phaseProgress;
 
+        CurrentPhaseTimeRemaining = GetDuration(phase) * (1f - phaseProgress); 
         // In manual mode treat phase progress as transition progress too
         OnTransitionProgress?.Invoke(CurrentTimeOfDay, NextTimeOfDay, Mathf.SmoothStep(0, 1, phaseProgress));
         OnPhaseProgress?.Invoke(phaseProgress);
@@ -152,12 +156,10 @@ public class DayNightCycleManager : MonoBehaviour
         NextTimeOfDay = GetNextTimeOfDay(phase);
         IsTransitioning = false;
         TransitionProgress = 0f;
+        CurrentPhaseTimeRemaining = duration;
 
         OnTimeOfDayChanged?.Invoke(CurrentTimeOfDay);
 
-        // ── Stable hold ──────────────────────────────────────────
-        // The "hold" time is the full duration minus the transition overlap.
-        // The transition begins at the END of the phase.
         float holdTime = Mathf.Max(0f, duration - transitionDuration);
         float holdTimer = 0f;
 
@@ -165,14 +167,13 @@ public class DayNightCycleManager : MonoBehaviour
         {
             holdTimer += Time.deltaTime;
             PhaseProgress = Mathf.Clamp01(holdTimer / holdTime);
+            CurrentPhaseTimeRemaining = duration - holdTimer;
 
-            // During hold, blendT stays at 0 (fully current phase)
             OnTransitionProgress?.Invoke(CurrentTimeOfDay, NextTimeOfDay, 0f);
             OnPhaseProgress?.Invoke(PhaseProgress);
             yield return null;
         }
 
-        // ── Transition blend ─────────────────────────────────────
         IsTransitioning = true;
         float transTimer = 0f;
 
@@ -180,6 +181,7 @@ public class DayNightCycleManager : MonoBehaviour
         {
             transTimer += Time.deltaTime;
             TransitionProgress = Mathf.Clamp01(transTimer / transitionDuration);
+            CurrentPhaseTimeRemaining = Mathf.Max(0f, transitionDuration - transTimer);
 
             float smoothT = Mathf.SmoothStep(0f, 1f, TransitionProgress);
             OnTransitionProgress?.Invoke(CurrentTimeOfDay, NextTimeOfDay, smoothT);
@@ -189,6 +191,7 @@ public class DayNightCycleManager : MonoBehaviour
 
         IsTransitioning = false;
         TransitionProgress = 1f;
+        CurrentPhaseTimeRemaining = 0f;
     }
 
     // ── Helpers ───────────────────────────────────────────────────
@@ -278,6 +281,7 @@ public class DayNightCycleManager : MonoBehaviour
         NextTimeOfDay = GetNextTimeOfDay(timeOfDay);
         TransitionProgress = 0f;
         IsTransitioning = false;
+        CurrentPhaseTimeRemaining = GetDuration(timeOfDay); // NEW
 
         OnTimeOfDayChanged?.Invoke(CurrentTimeOfDay);
         OnTransitionProgress?.Invoke(CurrentTimeOfDay, NextTimeOfDay, 0f);
