@@ -38,7 +38,10 @@ public class MoveToTargetCommand : ICommand<BaseCharacter>
     {
         if (_target == null || !_target.IsAlive)
         {
+            if (_attacker.CurrentTarget == _target)
+                _attacker.DisengageCurrentTarget();
             IsComplete = true;
+            character.StopMoving();
             character.StateMachine.ChangeState(new CharacterIdleState());
             return;
         }
@@ -101,7 +104,7 @@ public class MoveToTargetCommand : ICommand<BaseCharacter>
     {
         _target?.Disengage(_attacker.gameObject);
         if (_attacker != null && _attacker.CurrentTarget == _target)
-            _attacker.CurrentTarget = null;
+            _attacker.DisengageCurrentTarget();
         IsComplete = true;
     }
 
@@ -109,7 +112,7 @@ public class MoveToTargetCommand : ICommand<BaseCharacter>
     {
         _target.Disengage(_attacker.gameObject);
         if (_attacker.CurrentTarget == _target)
-            _attacker.CurrentTarget = null;
+            _attacker.DisengageCurrentTarget();
         IsComplete = true;
         character.StopMoving();
         character.StateMachine.ChangeState(new CharacterIdleState());

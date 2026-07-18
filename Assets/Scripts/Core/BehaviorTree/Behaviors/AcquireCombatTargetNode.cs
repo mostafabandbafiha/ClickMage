@@ -34,7 +34,7 @@ public class AcquireCombatTargetNode : IBehaviorNode<BaseCharacter>
 
         if (target == null) return false;
 
-        enemy.CurrentTarget = target;
+        enemy.SetCombatTarget(target);
         enemy.GiveAutonomousCommand(new MoveToTargetCommand(target, enemy));
         enemy.QueueCommand(enemy.CreateAttackCommand(target));
 
@@ -46,18 +46,16 @@ public class AcquireCombatTargetNode : IBehaviorNode<BaseCharacter>
     {
         // Castle and Towers are also Faction.Player, so we can't just take
         // TargetRegistry's global nearest — filter to Hero-owned Targetables
-        // specifically, then bound by aggro radius.
+        // specifically, then bound by aggro radius and engage capacity.
         if (TargetRegistry.Instance == null) return null;
-
         Targetable nearest = null;
         float nearestSq = float.MaxValue;
         float aggroSq = enemy.AggroRadius * enemy.AggroRadius;
-
         foreach (var t in TargetRegistry.Instance.GetTargets(Faction.Player))
         {
             if (t == null || !t.IsAlive) continue;
+            if (!t.HasCapacity) continue;
             if (t.GetComponent<HeroCharacter>() == null) continue;
-
             float sq = (t.Position - enemy.transform.position).sqrMagnitude;
             if (sq > aggroSq) continue;
             if (sq < nearestSq) { nearestSq = sq; nearest = t; }
@@ -65,19 +63,19 @@ public class AcquireCombatTargetNode : IBehaviorNode<BaseCharacter>
         return nearest;
     }
 
-    private static Targetable FindTowerAttackingMe(EnemyCharacter enemy)
+   private static Targetable FindTowerAttackingMe(EnemyCharacter enemy)
     {
         var myTargetable = enemy.GetComponent<Targetable>();
         if (myTargetable == null) return null;
-
-        // No TowerRegistry exists yet — scene tower counts are small enough that
-        // this is fine at BT-tick frequency. Revisit if that stops being true.
         var towers = Object.FindObjectsByType<Tower>(FindObjectsSortMode.None);
         foreach (var tower in towers)
         {
             if (tower == null) continue;
             if (tower.CurrentTarget == myTargetable)
-                return tower.GetComponent<Targetable>();
+            {
+                var t = tower.GetComponent<Targetable>();
+                if (t != null && t.HasCapacity) return t; // NEW capacity check
+            }
         }
         return null;
     }

@@ -32,6 +32,7 @@ public class SkeletonArcher : EnemyCharacter
         return new BehaviorTree<BaseCharacter>(
             new SelectorNode<BaseCharacter>(
                  new AcquireCombatTargetNode(),
+                 new RetreatNode(),
                  new ScoredAdvanceNode()
             )
         );
@@ -59,7 +60,14 @@ public class SkeletonArcher : EnemyCharacter
 
     public override void Die(DeathCause cause)
     {
-        CurrentTarget = null;
+        DisengageCurrentTarget();
+
+        if (cause == DeathCause.Retreated)
+        {
+            // Quiet despawn - no grave, no loot, this enemy wasn't killed
+            base.Die(cause);
+            return;
+        }
 
         if (cause == DeathCause.KilledByCommander)
         {

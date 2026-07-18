@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class EnemyCharacter : CombatCharacter
 {
-    public enum DeathCause { KilledByCommander, KilledByPlayer }
+    public enum DeathCause { KilledByCommander, KilledByPlayer, Retreated }
 
     public event System.Action<EnemyCharacter> OnDeath;
 
@@ -27,6 +27,10 @@ public abstract class EnemyCharacter : CombatCharacter
     [SerializeField] private float personalHeadingBiasRange = 15f;
     public float PersonalHeadingBiasDegrees { get; private set; }
 
+
+    [Header("Retreat")]
+    public Vector3 RetreatDestination { get; set; }
+
     protected override void Awake()
     {
         base.Awake();
@@ -39,6 +43,7 @@ public abstract class EnemyCharacter : CombatCharacter
     public virtual void Die(DeathCause cause)
     {
         OnDeath?.Invoke(this);
+        DisengageCurrentTarget();
         Destroy(gameObject);
     }
 

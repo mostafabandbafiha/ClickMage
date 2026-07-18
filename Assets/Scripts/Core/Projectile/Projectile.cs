@@ -14,9 +14,14 @@ public class Projectile : MonoBehaviour, IPoolable
 
     [Header("Hit Detection")]
     [SerializeField] private float hitThreshold = 0.3f; // how close to the collider surface counts as a hit
+    [SerializeField] private Vector2 hitHeightRange = new Vector2(0.3f, 0.85f); // fraction of collider height, avoids floor & head clipping
+    [SerializeField] private float hitHorizontalSpread = 0.6f; // fraction of collider width/depth extents
+
+    private Vector3 _localHitOffset; // relative to target's transform, so it follows the enemy
 
     [Header("On-Hit Behaviour")]
-    [SerializeField] private float stickDuration = 2f;
+    [SerializeField] private float stickDuration = 0.2f;
+
 
     public DamageType Element => element;
 
@@ -40,17 +45,39 @@ public class Projectile : MonoBehaviour, IPoolable
         _damage = damage;
         _spawnTime = Time.time;
         _startPosition = transform.position;
-        _lastKnownTargetPosition = target.Position;
-        _journeyLength = Vector3.Distance(_startPosition, _lastKnownTargetPosition);
         _hasHit = false;
         _rawT = 0f;
 
-        // Cache once - avoids GetComponent every frame
         _targetCollider = target.GetComponent<Collider>();
         if (_targetCollider == null)
             _targetCollider = target.GetComponentInChildren<Collider>();
+
+        Vector3 aimPoint = PickHitPoint(target);
+        _localHitOffset = target.transform.InverseTransformPoint(aimPoint);
+
+        _lastKnownTargetPosition = aimPoint;
+        _journeyLength = Vector3.Distance(_startPosition, _lastKnownTargetPosition);
     }
 
+    private Vector3 PickHitPoint(Targetable target)
+    {
+        if (_targetCollider == null)
+            return target.Position;
+
+        Bounds b = _targetCollider.bounds;
+
+        float rx = Random.Range(-hitHorizontalSpread, hitHorizontalSpread) * b.extents.x;
+        float rz = Random.Range(-hitHorizontalSpread, hitHorizontalSpread) * b.extents.z;
+        // bounds.center is mid-height; offset upward within [hitHeightRange] of full height,
+        // measured from the bottom of the collider, so it never lands on the floor
+        float bottomY = b.center.y - b.extents.y;
+        float ry = bottomY + b.size.y * Random.Range(hitHeightRange.x, hitHeightRange.y);
+
+        Vector3 randomInterior = new Vector3(b.center.x + rx, ry, b.center.z + rz);
+
+        // Project that random interior point onto the actual collider surface
+        return _targetCollider.ClosestPoint(randomInterior);
+    }
     public virtual void OnSpawn()
     {
         _hasHit = false;
@@ -81,7 +108,7 @@ public class Projectile : MonoBehaviour, IPoolable
         }
 
         if (_target != null && _target.IsAlive)
-            _lastKnownTargetPosition = _target.Position;
+            _lastKnownTargetPosition = _target.transform.TransformPoint(_localHitOffset);
 
         _journeyLength = Vector3.Distance(_startPosition, _lastKnownTargetPosition);
 
@@ -100,22 +127,16 @@ public class Projectile : MonoBehaviour, IPoolable
 
         transform.position = newPosition;
 
-        // Cheap check: closest point on the target's own collider, no scene query
-        if (_targetCollider != null)
+        // Distance check against the fixed aim point, not a re-derived closest point
+        if (Vector3.Distance(newPosition, _lastKnownTargetPosition) <= hitThreshold)
         {
-            Vector3 surfacePoint = _targetCollider.ClosestPoint(newPosition);
-            if (Vector3.Distance(newPosition, surfacePoint) <= hitThreshold)
-            {
-                Quaternion hitRotation = Quaternion.LookRotation((surfacePoint - _startPosition).normalized);
-                ResolveHit(surfacePoint, hitRotation);
-                return;
-            }
+            Quaternion hitRotation = Quaternion.LookRotation((_lastKnownTargetPosition - _startPosition).normalized);
+            ResolveHit(_lastKnownTargetPosition, hitRotation);
+            return;
         }
-        else if (_rawT >= 1f)
-        {
-            // Fallback if no collider was found on the target
+
+        if (_rawT >= 1f)
             ResolveHit(newPosition, transform.rotation);
-        }
     }
 
     private void ResolveHit(Vector3 hitPoint, Quaternion hitRotation)

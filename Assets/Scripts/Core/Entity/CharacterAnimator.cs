@@ -6,23 +6,33 @@ public class CharacterAnimator : MonoBehaviour, IAnimatable
     [SerializeField] private Animator animator;
     [SerializeField] private float crossFadeDuration = 0.15f;
 
-    // Tracks the last state WE asked for, not what the Animator has actually
-    // settled into. GetCurrentAnimatorStateInfo() lags behind CrossFade() calls
-    // made earlier in the same script frame (Mecanim only applies transitions
-    // during its own update pass), so guarding against it caused back-to-back
-    // calls in one frame (e.g. Idle then immediately Walk, when a move finishes
-    // and the next move is queued synchronously) to silently drop the second call.
     private string _lastRequestedState;
 
     public void PlayAnimation(string stateName)
     {
+        PlayAnimation(stateName, forceRestart: false);
+    }
+
+    public void PlayAnimation(string stateName, bool forceRestart)
+    {
         if (animator == null) return;
-        if (_lastRequestedState == stateName) return; // avoid restarting an already-requested clip
+
+        // Guard against redundant re-triggering of a state we're already in
+        // (prevents the walk/idle "pop" between queued moves) — but skip the
+        // guard when forceRestart is set, e.g. for repeating actions like
+        // attacks, where the same clip legitimately needs to replay from the
+        // start every cooldown cycle rather than being treated as "already playing."
+        if (!forceRestart && _lastRequestedState == stateName) return;
+
         _lastRequestedState = stateName;
 
         // CrossFade blends between clips instead of hard-cutting to frame 0,
         // which is what caused the walk -> idle -> walk "pop" between moves.
-        animator.CrossFade(stateName, crossFadeDuration);
+        // For forceRestart, still use CrossFade (not Play) so the attack replay
+        // itself blends smoothly rather than popping — normalizedTime 0f just
+        // ensures it restarts from the beginning of the clip rather than
+        // continuing wherever the previous cycle left off.
+        animator.CrossFade(stateName, crossFadeDuration, 0, 0f);
     }
 
     public void SetFloat(string param, float value)
@@ -38,14 +48,11 @@ public class CharacterAnimator : MonoBehaviour, IAnimatable
     public float GetClipLength(string stateName)
     {
         if (animator == null) return 0.5f;
-
         if (animator.runtimeAnimatorController is AnimatorOverrideController overrideController)
         {
             var clip = overrideController[stateName];
             if (clip != null) return clip.length;
         }
-
         return 0.5f;
     }
-
 }

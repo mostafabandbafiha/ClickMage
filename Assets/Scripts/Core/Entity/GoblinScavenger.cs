@@ -30,6 +30,7 @@ public class GoblinScavenger : EnemyCharacter
         return new BehaviorTree<BaseCharacter>(
             new SelectorNode<BaseCharacter>(
                 new AcquireCombatTargetNode(), // Hero nearby, or a Tower attacking me
+                new RetreatNode(),
                 new ScoredAdvanceNode()        // proactive: score the forward cone, smash or step
             )
         );

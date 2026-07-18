@@ -79,7 +79,7 @@ public class AbyssalHorror : EnemyCharacter
 
     public override void Die(DeathCause cause)
     {
-        CurrentTarget = null;
+        DisengageCurrentTarget();
 
         // Kill all active summons when horror dies
         var toKill = new List<EnemyCharacter>(_activeSummons);

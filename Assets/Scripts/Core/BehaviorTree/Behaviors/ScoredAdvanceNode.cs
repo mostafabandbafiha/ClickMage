@@ -129,8 +129,20 @@ public class ScoredAdvanceNode : IBehaviorNode<BaseCharacter>
                 }
                 else if (cell.IsOccupied && cell.Structure != null)
                 {
-                    score = StructureScore + GetFocusFireBonus(cell.Structure);
-                    structureHere = cell.Structure;
+                    var cellTargetable = cell.Structure.GetComponent<Targetable>();
+                    bool isFull = cellTargetable != null && cellTargetable.IsAlive && !cellTargetable.HasCapacity;
+
+                    if (isFull)
+                    {
+                        // Full - treat as if nothing worth engaging here so enemies don't
+                        // repeatedly commit to a structure they'll just bounce off of.
+                        score = EmptyScore;
+                    }
+                    else
+                    {
+                        score = StructureScore + GetFocusFireBonus(cell.Structure);
+                        structureHere = cell.Structure;
+                    }
                 }
                 else
                 {
@@ -185,7 +197,7 @@ public class ScoredAdvanceNode : IBehaviorNode<BaseCharacter>
 
     private static bool EngageCastle(EnemyCharacter enemy, Targetable castleTargetable)
     {
-        enemy.CurrentTarget = castleTargetable;
+        enemy.SetCombatTarget(castleTargetable);
         enemy.GiveAutonomousCommand(new MoveToTargetCommand(castleTargetable, enemy));
         enemy.QueueCommand(enemy.CreateAttackCommand(castleTargetable));
         return true;
@@ -193,7 +205,7 @@ public class ScoredAdvanceNode : IBehaviorNode<BaseCharacter>
 
     private static bool EngageStructure(EnemyCharacter enemy, Targetable targetable)
     {
-        enemy.CurrentTarget = targetable;
+        enemy.SetCombatTarget(targetable);
         enemy.GiveAutonomousCommand(new MoveToTargetCommand(targetable, enemy));
         enemy.QueueCommand(enemy.CreateAttackCommand(targetable));
         return true;

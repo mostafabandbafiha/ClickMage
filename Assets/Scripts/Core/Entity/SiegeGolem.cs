@@ -65,7 +65,7 @@ public class SiegeGolem : EnemyCharacter
     }
     public override void Die(DeathCause cause)
     {
-        CurrentTarget = null;
+        DisengageCurrentTarget();
 
         if (cause == DeathCause.KilledByCommander)
         {

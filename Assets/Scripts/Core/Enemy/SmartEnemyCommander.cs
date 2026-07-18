@@ -53,6 +53,10 @@ public class SmartEnemyCommander : MonoBehaviour
     private int _spawnedCount = 0;
     private int _killedCount = 0;
 
+    private int _groupsFinishedSpawning;
+    private int _totalGroupsThisWave;
+    private bool _allGroupsSpawned;
+
     // ── Lifecycle ────────────────────────────────────────────────────────────
 
     private void Awake()
@@ -150,8 +154,10 @@ public class SmartEnemyCommander : MonoBehaviour
     {
         _waveActive = true;
         _isEndingWave = false;
+        _groupsFinishedSpawning = 0;
+        _totalGroupsThisWave = groups.Count;
+        _allGroupsSpawned = _totalGroupsThisWave == 0;
 
-        // Run groups in parallel (each group fires on its own delay)
         foreach (var group in groups)
             StartCoroutine(SpawnGroup(group));
 
@@ -163,6 +169,7 @@ public class SmartEnemyCommander : MonoBehaviour
         if (group.Prefab == null)
         {
             Debug.LogWarning($"[SmartEnemyCommander] Group '{group.DebugName}' has null prefab — skipped.");
+            MarkGroupFinished();
             yield break;
         }
 
@@ -171,29 +178,37 @@ public class SmartEnemyCommander : MonoBehaviour
 
         for (int i = 0; i < group.Count; i++)
         {
-            if (!_waveActive) yield break;   // dawn came early
+            if (!_waveActive) { MarkGroupFinished(); yield break; } // dawn came early
 
             SpawnEnemy(group.Prefab, group.TargetColumn, group.StatMultiplier);
 
             if (group.TimeBetweenSpawns > 0f)
                 yield return new WaitForSeconds(group.TimeBetweenSpawns);
         }
+
+        MarkGroupFinished();
+    }
+
+    private void MarkGroupFinished()
+    {
+        _groupsFinishedSpawning++;
+        if (_groupsFinishedSpawning >= _totalGroupsThisWave)
+            _allGroupsSpawned = true;
     }
 
     private void SpawnEnemy(EnemyCharacter prefab, int targetColumn, float statMult)
     {
-        Vector3 pos = GetSpawnPosition(targetColumn);
+        Vector3 pos = GetSpawnPosition(targetColumn, out Vector3 retreatPoint);
         EnemyCharacter enemy = Instantiate(prefab, pos, Quaternion.identity);
 
-        // Apply stat multiplier so late-game enemies feel meaningfully tougher
+        enemy.RetreatDestination = retreatPoint;
+
         ApplyStatMultiplier(enemy, statMult);
 
-        // Loot
         foreach (var item in _possibleLoot)
             if (Random.value <= _lootChance)
                 enemy.Inventory.AddItem(new ItemStack(item, 1));
 
-        // Track
         _activeEnemies.Add(enemy);
         _enemyMeta[enemy] = (targetColumn, Time.time);
         _spawnedCount++;
@@ -201,12 +216,36 @@ public class SmartEnemyCommander : MonoBehaviour
         enemy.OnDeath += OnEnemyDied;
     }
 
+    private Vector3 GetSpawnPosition(int targetColumn, out Vector3 retreatPoint)
+    {
+        if (_spawnAreas != null && _spawnAreas.Length > 0)
+        {
+            SpawnArea area = _spawnAreas[targetColumn % _spawnAreas.Length];
+            if (area != null)
+            {
+                Vector3 spawnPoint = area.GetRandomPoint();
+                retreatPoint = spawnPoint; // retreat back toward the same area
+                return spawnPoint;
+            }
+        }
+
+        if (_grid != null)
+        {
+            int row = Mathf.Clamp(targetColumn, 0, _grid.Rows - 1);
+            Vector3 gridPos = _grid.GridToWorld(0, row);
+            retreatPoint = gridPos;
+            return gridPos;
+        }
+
+        retreatPoint = transform.position;
+        return transform.position;
+    }
+
     private void OnEnemyDied(EnemyCharacter enemy)
     {
         enemy.OnDeath -= OnEnemyDied;
         _activeEnemies.Remove(enemy);
 
-        // Record survival time for zone memory
         if (_enemyMeta.TryGetValue(enemy, out var meta))
         {
             float survived = Time.time - meta.spawnTime;
@@ -218,13 +257,15 @@ public class SmartEnemyCommander : MonoBehaviour
 
         _killedCount++;
 
-        if (_waveActive && !_isEndingWave && _activeEnemies.Count == 0)
+        // FIXED: only treat the wave as cleared once every group has finished
+        // spawning AND no one is left alive — not just whenever the living count
+        // happens to hit zero mid-wave (e.g. between a fast-cleared early group
+        // and a delayed later group like a boss phase).
+        if (_waveActive && !_isEndingWave && _allGroupsSpawned && _activeEnemies.Count == 0)
         {
             _waveActive = false;
             FeedbackSurvivalToScanner();
             Debug.Log("[SmartEnemyCommander] Wave cleared early — skipping to day.");
-
-            // Small grace period so the player sees the victory moment
             StartCoroutine(SkipToDayAfterDelay(10f));
         }
     }
@@ -248,8 +289,9 @@ public class SmartEnemyCommander : MonoBehaviour
         if (_isEndingWave) return;
         _isEndingWave = true;
         _waveActive = false;
+        _allGroupsSpawned = false; // NEW
 
-        StopAllCoroutines();   // stop any in-progress spawn coroutines
+        StopAllCoroutines();
 
         var toKill = new List<EnemyCharacter>(_activeEnemies);
         _activeEnemies.Clear();
@@ -341,31 +383,6 @@ public class SmartEnemyCommander : MonoBehaviour
     }
 
     // ── Spawn position helpers ────────────────────────────────────────────────
-
-    /// <summary>
-    /// Spawn the enemy at the left edge (col 0) of the grid, in the row that
-    /// corresponds to the targetColumn the commander chose.
-    /// Enemies walk right — the targetColumn tells them which row to aim for.
-    /// (EnemySeekState should read TargetColumn from the enemy's data.)
-    /// </summary>
-    private Vector3 GetSpawnPosition(int targetColumn)
-    {
-        if (_spawnAreas != null && _spawnAreas.Length > 0)
-        {
-            // Pick the spawn area closest to the target row
-            SpawnArea area = _spawnAreas[targetColumn % _spawnAreas.Length];
-            if (area != null) return area.GetRandomPoint();
-        }
-
-        if (_grid != null)
-        {
-            // Fallback: spawn at left edge, row = targetColumn
-            int row = Mathf.Clamp(targetColumn, 0, _grid.Rows - 1);
-            return _grid.GridToWorld(0, row);
-        }
-
-        return transform.position;
-    }
 
     private static void ApplyStatMultiplier(EnemyCharacter enemy, float mult)
     {

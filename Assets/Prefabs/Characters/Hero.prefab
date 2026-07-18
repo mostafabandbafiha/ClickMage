@@ -87,6 +87,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 50105948f2beae7498d5aeff5329412d, type: 2}
   - {fileID: 11400000, guid: b196a144b48e70d46b840e89c1f89ee2, type: 2}
   - {fileID: 11400000, guid: b6fe7d33f199daf4cb08c32797d20d31, type: 2}
+  - {fileID: 11400000, guid: 4f27278e234ad52438b5a65d9ea826ed, type: 2}
   maxSlots: 4
   rotationSpeed: 10
   playerControlTimeout: 5
@@ -200,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0bb797e8c3b6f94284a89091d8f346e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityTargetable
-  maxCapacity: 1
+  maxCapacity: 2
   faction: 0
   pulseDuration: 0.25
   pulseCurve:

@@ -6,8 +6,6 @@ using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
-    // ── Inspector ──────────────────────────────────────────────────────────
-
     [Header("References")]
     [SerializeField] private Transform followTarget;
     [SerializeField] private Cinemachine.CinemachineVirtualCamera virtualCamera;
@@ -55,12 +53,20 @@ public class CameraController : MonoBehaviour
     private bool _holdTriggered;
     private Coroutine _holdCoroutine;
 
+    // NEW: fixed height for the follow rig - never drifts regardless of what a raycast hits
+    private float _followTargetFixedY;
+
+    // NEW: selection cycling state
+    private List<Collider> _lastCycleHits = new List<Collider>();
+    private int _cycleIndex = -1;
+
     // ── Lifecycle ──────────────────────────────────────────────────────────
 
     private void Awake()
     {
         if (mainCamera == null) mainCamera = Camera.main;
         if (virtualCamera != null) _targetZoom = virtualCamera.m_Lens.OrthographicSize;
+        if (followTarget != null) _followTargetFixedY = followTarget.position.y;
     }
 
     private void Update()
@@ -73,19 +79,26 @@ public class CameraController : MonoBehaviour
         ClampPosition();
     }
 
-    // ── Input handlers — all unchanged ────────────────────────────────────
+    // ── Follow-target movement (single point of truth for Y) ───────────────
+
+    /// <summary>
+    /// All followTarget position writes should go through here.
+    /// Guarantees Y never drifts due to a raycast hitting a tower/hero/etc.
+    /// </summary>
+    private void SetFollowTargetXZ(Vector3 desiredPos)
+    {
+        desiredPos.y = _followTargetFixedY;
+        followTarget.position = desiredPos;
+    }
+
+    // ── Input handlers ───────────────────────────────────────────────────
 
     private void HandleRightClick()
-    {   
-
+    {
         if (!Input.GetMouseButtonDown(1)) return;
-
-        // let BuildModeController consume right-click first
         if (BuildModeController.Instance != null && BuildModeController.Instance.IsActive) return;
-
         if (IsPointerOverUI(Input.mousePosition)) return;
 
-        // only act if selected entity is a character
         var selected = SelectionManager.Instance.CurrentSelected;
         if (selected == null) return;
 
@@ -94,14 +107,12 @@ public class CameraController : MonoBehaviour
 
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-        // priority 1: hit a selectable target → context menu
         if (Physics.Raycast(ray, out RaycastHit selectableHit, raycastMaxDistance, selectableLayer))
         {
             OpenContextMenu(character, selectableHit.collider.gameObject);
             return;
         }
 
-        // priority 2: hit ground → move command
         if (Physics.Raycast(ray, out RaycastHit groundHit, raycastMaxDistance, groundLayer))
         {
             bool isShift = Input.GetKey(KeyCode.LeftShift);
@@ -113,24 +124,6 @@ public class CameraController : MonoBehaviour
                 character.GiveCommand(moveCmd);
         }
     }
-
-    /*private void OpenContextMenu(Character character, GameObject target)
-    {
-        Debug.Log($"[ContextMenu] {character.CharacterName} → {target.name}");
-
-        if (target.TryGetComponent(out ResourceNode node))
-        {
-            Debug.Log($"Issuing HarvestCommand on {node.name}");
-
-            bool isShift = Input.GetKey(KeyCode.LeftShift);
-            ICommand harvestCmd = new HarvestCommand(node);
-
-            if (isShift)
-                character.QueueCommand(harvestCmd);
-            else
-                character.GiveCommand(harvestCmd);
-        }
-    }*/
 
     private void OpenContextMenu(BaseCharacter character, GameObject target)
     {
@@ -162,7 +155,7 @@ public class CameraController : MonoBehaviour
         right.Normalize(); forward.Normalize();
 
         Vector3 dir = (right * h + forward * v).normalized;
-        followTarget.position += dir * (moveSpeed * Time.deltaTime);
+        SetFollowTargetXZ(followTarget.position + dir * (moveSpeed * Time.deltaTime));
     }
 
     private void HandlePan()
@@ -176,12 +169,11 @@ public class CameraController : MonoBehaviour
         if (!_isPanning) return;
 
         Vector3 currentWorld = RaycastGroundPlane(Input.mousePosition);
-        followTarget.position += _panOriginWorld - currentWorld;
+        SetFollowTargetXZ(followTarget.position + (_panOriginWorld - currentWorld));
     }
 
     private void HandleClickAndHold()
     {
-        // yield left-click entirely to BuildModeController
         if (BuildModeController.Instance != null && BuildModeController.Instance.IsActive) return;
 
         if (Input.GetMouseButtonDown(0))
@@ -220,11 +212,15 @@ public class CameraController : MonoBehaviour
 
     private void HandleShortClick(Vector2 screenPos)
     {
-        if (IsPointerOverUI(screenPos)) return;
+        if (IsPointerOverUI(screenPos))
+        {
+            // clicking UI shouldn't disturb the selection cycle state
+            return;
+        }
 
         Ray ray = mainCamera.ScreenPointToRay(screenPos);
 
-        // Priority 1: Collectibles — check these first so items are always clickable
+        // Priority 1: Collectibles
         if (Physics.Raycast(ray, out RaycastHit hitItem, raycastMaxDistance, collectibleLayer))
         {
             InteractableComponent interactable = hitItem.collider.GetComponentInParent<InteractableComponent>();
@@ -235,30 +231,60 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        // Priority 2: Selectable entities
-        if (Physics.Raycast(ray, out RaycastHit hitSelectable, raycastMaxDistance, selectableLayer))
+        // Priority 2: Selectable entities — cycle through overlapping colliders
+        if (TryGetCycledSelectable(ray, out SelectableComponent selectable))
         {
-            SelectableComponent selectable = hitSelectable.collider.GetComponentInParent<SelectableComponent>();
             if (SelectionManager.Instance.CurrentSelected == selectable)
             {
                 var node = selectable.GetComponent<ResourceNode>();
-                if(node != null)
+                if (node != null)
                 {
                     node.TryHarvest();
                 }
                 return;
             }
-            if (selectable != null)
-            {
-                SelectionManager.Instance.Select(selectable);
-                return;
-            }
+
+            SelectionManager.Instance.Select(selectable);
+            return;
         }
 
         // Priority 3: Nothing hit — deselect
         SelectionManager.Instance.Deselect();
     }
 
+    // NEW: cycles through all selectable colliders under the cursor on repeated clicks
+    private bool TryGetCycledSelectable(Ray ray, out SelectableComponent selectable)
+    {
+        selectable = null;
+
+        RaycastHit[] hits = Physics.RaycastAll(ray, raycastMaxDistance, selectableLayer);
+        if (hits.Length == 0)
+        {
+            _lastCycleHits.Clear();
+            _cycleIndex = -1;
+            return false;
+        }
+
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+        var hitColliders = new List<Collider>(hits.Length);
+        foreach (var h in hits) hitColliders.Add(h.collider);
+
+        bool sameStack = SameColliderSet(hitColliders, _lastCycleHits);
+        _cycleIndex = sameStack ? (_cycleIndex + 1) % hitColliders.Count : 0;
+        _lastCycleHits = hitColliders;
+
+        selectable = hitColliders[_cycleIndex].GetComponentInParent<SelectableComponent>();
+        return selectable != null;
+    }
+
+    private static bool SameColliderSet(List<Collider> a, List<Collider> b)
+    {
+        if (a.Count != b.Count) return false;
+        for (int i = 0; i < a.Count; i++)
+            if (a[i] != b[i]) return false;
+        return true;
+    }
 
     private void HandleHoldAction(Vector2 screenPos)
     {
@@ -269,8 +295,6 @@ public class CameraController : MonoBehaviour
             CollectInRadius(hit.point);
     }
 
-    // ── CollectInRadius — unchanged, WorldItemPickup fires the signal internally
-
     private void CollectInRadius(Vector3 worldPos)
     {
         Collider[] hits = Physics.OverlapSphere(worldPos, collectRadius, collectibleLayer);
@@ -280,8 +304,6 @@ public class CameraController : MonoBehaviour
             interactable?.Interact();
         }
     }
-
-    // ── UI detection — unchanged ───────────────────────────────────────────
 
     private bool IsPointerOverUI(Vector2 screenPos)
     {
@@ -299,16 +321,18 @@ public class CameraController : MonoBehaviour
         return false;
     }
 
-    // ── Unchanged helpers ──────────────────────────────────────────────────
-
+    // FIXED: now restricted to groundLayer, and the plane fallback uses the
+    // rig's actual fixed height instead of assuming y = 0.
     private Vector3 RaycastGroundPlane(Vector2 screenPos)
     {
         Ray ray = mainCamera.ScreenPointToRay(screenPos);
-        if (Physics.Raycast(ray, out RaycastHit hit, raycastMaxDistance)) return hit.point;
+
+        if (Physics.Raycast(ray, out RaycastHit hit, raycastMaxDistance, groundLayer))
+            return hit.point;
 
         if (Mathf.Abs(ray.direction.y) > 0.001f)
         {
-            float t = -ray.origin.y / ray.direction.y;
+            float t = (_followTargetFixedY - ray.origin.y) / ray.direction.y;
             if (t > 0f) return ray.origin + ray.direction * t;
         }
 
@@ -321,7 +345,7 @@ public class CameraController : MonoBehaviour
         Vector3 pos = followTarget.position;
         pos.x = Mathf.Clamp(pos.x, boundsMinX, boundsMaxX);
         pos.z = Mathf.Clamp(pos.z, boundsMinZ, boundsMaxZ);
-        followTarget.position = pos;
+        SetFollowTargetXZ(pos);
     }
 
     private void OnDrawGizmosSelected()

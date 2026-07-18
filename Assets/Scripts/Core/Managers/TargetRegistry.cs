@@ -111,6 +111,17 @@ public class TargetRegistry : MonoBehaviour
         return nearest;
     }
 
+    public bool HasLivingStructures(Faction faction)
+    {
+        if (!_registry.TryGetValue(faction, out var set)) return false;
+        foreach (var t in set)
+        {
+            if (t == null || !t.IsAlive) continue;
+            if (t.GetComponent<CombatCharacter>() != null) continue; // heroes/characters don't count
+            return true;
+        }
+        return false;
+    }
 
     public bool HasLivingTargets(Faction faction)
     {

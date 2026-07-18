@@ -15,43 +15,25 @@ public class DayNightCycleManager : MonoBehaviour
     [SerializeField] private float rainyDuration = 90f;
 
     [Header("Transition")]
-    [Tooltip("How long the blend between two phases takes (seconds)")]
     [SerializeField] private float transitionDuration = 15f;
 
     [Header("Testing")]
     [SerializeField] private bool useManualControl = false;
     [SerializeField, Range(0f, 1f)] private float manualTimeProgress = 0f;
 
-
-
-    // ── Public state ──────────────────────────────────────────────
     public TimeOfDay CurrentTimeOfDay { get; private set; }
     public TimeOfDay NextTimeOfDay { get; private set; }
-    public float TransitionProgress { get; private set; } // 0-1 during blend
+    public float TransitionProgress { get; private set; }
     public bool IsTransitioning { get; private set; }
-    public float PhaseProgress { get; private set; } // 0-1 inside current phase
-    public float CurrentPhaseTimeRemaining { get; private set; } // NEW: seconds left until next phase fully starts
+    public float PhaseProgress { get; private set; }
+    public float CurrentPhaseTimeRemaining { get; private set; }
 
-    // ── Events ────────────────────────────────────────────────────
-    /// Fired once when a new phase STARTS (after transition completes)
     public event Action<TimeOfDay> OnTimeOfDayChanged;
-    /// Fired every frame: from, to, blendT (0=fully 'from', 1=fully 'to')
     public event Action<TimeOfDay, TimeOfDay, float> OnTransitionProgress;
-    /// Fired every frame: 0-1 progress within the stable part of the phase
     public event Action<float> OnPhaseProgress;
 
-    // ── Private ───────────────────────────────────────────────────
-    private Coroutine cycleCoroutine;
-    private TimeOfDay previousTimeForManual;
-
-    // ─────────────────────────────────────────────────────────────
-    private void Update()
-    {
-        if (useManualControl)
-        {
-            UpdateManualTime();
-        }
-    }
+    private Coroutine _cycleCoroutine;
+    private TimeOfDay _previousTimeForManual;
 
     private void Awake()
     {
@@ -63,35 +45,62 @@ public class DayNightCycleManager : MonoBehaviour
     {
         CurrentTimeOfDay = TimeOfDay.Day;
         NextTimeOfDay = TimeOfDay.Sunset;
-        previousTimeForManual = TimeOfDay.Day;
+        _previousTimeForManual = TimeOfDay.Day;
         TransitionProgress = 0f;
         IsTransitioning = false;
 
         if (!useManualControl)
-            cycleCoroutine = StartCoroutine(CycleRoutine());
+            RestartCycleFrom(TimeOfDay.Day);
 
-        // fire initial state
         OnTransitionProgress?.Invoke(CurrentTimeOfDay, NextTimeOfDay, 0f);
     }
 
-    // ── Inspector live editing ────────────────────────────────────
+    // NEW: resume automatically if this object was ever disabled/re-enabled
+    private void OnEnable()
+    {
+        if (!Application.isPlaying) return;
+        if (!useManualControl && _cycleCoroutine == null)
+            RestartCycleFrom(CurrentTimeOfDay);
+    }
+
+    private void OnDisable()
+    {
+        StopCycleCoroutine();
+    }
+
     private void OnValidate()
     {
         if (!Application.isPlaying) return;
 
         if (useManualControl)
         {
-            if (cycleCoroutine != null) { StopCoroutine(cycleCoroutine); cycleCoroutine = null; }
+            StopCycleCoroutine();
             UpdateManualTime();
         }
-        else
+        else if (_cycleCoroutine == null)
         {
-            if (cycleCoroutine == null)
-                cycleCoroutine = StartCoroutine(CycleRoutine());
+            RestartCycleFrom(CurrentTimeOfDay);
         }
     }
 
-    // ── Manual (slider) mode ──────────────────────────────────────
+    // ── Single choke point for starting/stopping the cycle ─────────────────
+    // Every place that needs to (re)start the automatic cycle goes through
+    // here, so there is never more than one CycleFrom coroutine alive.
+    private void RestartCycleFrom(TimeOfDay phase)
+    {
+        StopCycleCoroutine();
+        _cycleCoroutine = StartCoroutine(CycleFrom(phase));
+    }
+
+    private void StopCycleCoroutine()
+    {
+        if (_cycleCoroutine != null)
+        {
+            StopCoroutine(_cycleCoroutine);
+            _cycleCoroutine = null;
+        }
+    }
+
     private void UpdateManualTime()
     {
         float total = dayDuration + sunsetDuration + nightDuration + rainyDuration;
@@ -121,35 +130,27 @@ public class DayNightCycleManager : MonoBehaviour
             phaseProgress = (abs - dayDuration - sunsetDuration - nightDuration) / rainyDuration;
         }
 
-        if (phase != previousTimeForManual)
+        if (phase != _previousTimeForManual)
         {
             CurrentTimeOfDay = phase;
             NextTimeOfDay = GetNextTimeOfDay(phase);
-            previousTimeForManual = phase;
+            _previousTimeForManual = phase;
             OnTimeOfDayChanged?.Invoke(CurrentTimeOfDay);
         }
 
         PhaseProgress = phaseProgress;
+        CurrentPhaseTimeRemaining = GetDuration(phase) * (1f - phaseProgress);
 
-        CurrentPhaseTimeRemaining = GetDuration(phase) * (1f - phaseProgress); 
-        // In manual mode treat phase progress as transition progress too
         OnTransitionProgress?.Invoke(CurrentTimeOfDay, NextTimeOfDay, Mathf.SmoothStep(0, 1, phaseProgress));
         OnPhaseProgress?.Invoke(phaseProgress);
     }
 
-    // ── Automatic cycle ───────────────────────────────────────────
-    private IEnumerator CycleRoutine()
+    private void Update()
     {
-        while (true)
-        {
-            yield return RunPhase(TimeOfDay.Day, dayDuration);
-            yield return RunPhase(TimeOfDay.Sunset, sunsetDuration);
-            yield return RunPhase(TimeOfDay.Night, nightDuration);
-            yield return RunPhase(TimeOfDay.Rainy, rainyDuration);
-        }
+        if (useManualControl)
+            UpdateManualTime();
     }
 
-    /// Runs one phase: stable hold → transition into next phase
     private IEnumerator RunPhase(TimeOfDay phase, float duration)
     {
         CurrentTimeOfDay = phase;
@@ -165,7 +166,9 @@ public class DayNightCycleManager : MonoBehaviour
 
         while (holdTimer < holdTime)
         {
-            holdTimer += Time.deltaTime;
+            // clamp deltaTime so a single-frame hitch (e.g. many enemies dying
+            // and destroying at once) can't blow past a big chunk of the timer
+            holdTimer += Mathf.Min(Time.deltaTime, 0.25f);
             PhaseProgress = Mathf.Clamp01(holdTimer / holdTime);
             CurrentPhaseTimeRemaining = duration - holdTimer;
 
@@ -179,7 +182,7 @@ public class DayNightCycleManager : MonoBehaviour
 
         while (transTimer < transitionDuration)
         {
-            transTimer += Time.deltaTime;
+            transTimer += Mathf.Min(Time.deltaTime, 0.25f);
             TransitionProgress = Mathf.Clamp01(transTimer / transitionDuration);
             CurrentPhaseTimeRemaining = Mathf.Max(0f, transitionDuration - transTimer);
 
@@ -194,29 +197,42 @@ public class DayNightCycleManager : MonoBehaviour
         CurrentPhaseTimeRemaining = 0f;
     }
 
-    // ── Helpers ───────────────────────────────────────────────────
-    /// <summary>
-    /// Smoothly transitions into the next phase by jumping straight to
-    /// the transition blend portion, then continues the normal cycle.
-    /// </summary>
+    private IEnumerator CycleFrom(TimeOfDay startPhase)
+    {
+        TimeOfDay[] order = { TimeOfDay.Day, TimeOfDay.Sunset, TimeOfDay.Night, TimeOfDay.Rainy };
+        int startIndex = System.Array.IndexOf(order, startPhase);
+        if (startIndex < 0) startIndex = 0;
+
+        bool firstLoop = true;
+        while (true)
+        {
+            for (int i = 0; i < order.Length; i++)
+            {
+                if (firstLoop && i < startIndex) continue; // skip already-passed phases only on the first loop
+                TimeOfDay phase = order[i];
+                yield return RunPhase(phase, GetDuration(phase));
+            }
+            firstLoop = false;
+        }
+    }
+
     public void SkipToNextPhase()
     {
-        if (cycleCoroutine != null) StopCoroutine(cycleCoroutine);
-        cycleCoroutine = StartCoroutine(SkipToTransitionThenCycle());
+        StopCycleCoroutine();
+        _cycleCoroutine = StartCoroutine(SkipToTransitionThenCycle());
     }
 
     private IEnumerator SkipToTransitionThenCycle()
     {
         TimeOfDay next = GetNextTimeOfDay(CurrentTimeOfDay);
 
-        // Run only the transition blend portion (skip the hold)
         IsTransitioning = true;
         TransitionProgress = 0f;
         float transTimer = 0f;
 
         while (transTimer < transitionDuration)
         {
-            transTimer += Time.deltaTime;
+            transTimer += Mathf.Min(Time.deltaTime, 0.25f);
             TransitionProgress = Mathf.Clamp01(transTimer / transitionDuration);
             float smoothT = Mathf.SmoothStep(0f, 1f, TransitionProgress);
             OnTransitionProgress?.Invoke(CurrentTimeOfDay, next, smoothT);
@@ -227,24 +243,7 @@ public class DayNightCycleManager : MonoBehaviour
         IsTransitioning = false;
         TransitionProgress = 1f;
 
-        // Now hand off to the normal cycle starting from 'next'
-        cycleCoroutine = StartCoroutine(CycleFrom(next));
-    }
-
-    private IEnumerator CycleFrom(TimeOfDay startPhase)
-    {
-        TimeOfDay[] order = { TimeOfDay.Day, TimeOfDay.Sunset, TimeOfDay.Night, TimeOfDay.Rainy };
-        int startIndex = System.Array.IndexOf(order, startPhase);
-
-        while (true)
-        {
-            for (int i = 0; i < order.Length; i++)
-            {
-                TimeOfDay phase = order[(startIndex + i) % order.Length];
-                yield return RunPhase(phase, GetDuration(phase));
-            }
-            startIndex = 0;
-        }
+        _cycleCoroutine = StartCoroutine(CycleFrom(next));
     }
 
     public TimeOfDay GetNextTimeOfDay(TimeOfDay current) => current switch
@@ -267,7 +266,6 @@ public class DayNightCycleManager : MonoBehaviour
 
     public bool IsNightTime() => CurrentTimeOfDay == TimeOfDay.Night;
 
-    // ── Force methods ─────────────────────────────────────────────
     [ContextMenu("Force Day")] public void ForceDay() => ForceTimeOfDay(TimeOfDay.Day);
     [ContextMenu("Force Sunset")] public void ForceSunset() => ForceTimeOfDay(TimeOfDay.Sunset);
     [ContextMenu("Force Night")] public void ForceNight() => ForceTimeOfDay(TimeOfDay.Night);
@@ -275,18 +273,18 @@ public class DayNightCycleManager : MonoBehaviour
 
     private void ForceTimeOfDay(TimeOfDay timeOfDay)
     {
-        if (cycleCoroutine != null) StopCoroutine(cycleCoroutine);
-
         CurrentTimeOfDay = timeOfDay;
         NextTimeOfDay = GetNextTimeOfDay(timeOfDay);
         TransitionProgress = 0f;
         IsTransitioning = false;
-        CurrentPhaseTimeRemaining = GetDuration(timeOfDay); // NEW
+        CurrentPhaseTimeRemaining = GetDuration(timeOfDay);
 
         OnTimeOfDayChanged?.Invoke(CurrentTimeOfDay);
         OnTransitionProgress?.Invoke(CurrentTimeOfDay, NextTimeOfDay, 0f);
 
+        // FIXED: continue the cycle from the forced phase instead of
+        // restarting the whole loop back at Day.
         if (!useManualControl)
-            cycleCoroutine = StartCoroutine(CycleRoutine());
+            RestartCycleFrom(timeOfDay);
     }
 }

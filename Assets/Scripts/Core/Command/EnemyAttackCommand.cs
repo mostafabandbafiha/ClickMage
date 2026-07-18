@@ -33,7 +33,8 @@ public class EnemyAttackCommand : ICommand<BaseCharacter>
         }
 
         _targetCollider = _target.GetComponent<Collider>();
-        _enemy.CurrentTarget = _target;
+        _enemy.SetCombatTarget(_target);
+
         character.StopMoving();
         character.StateMachine.ChangeState(new CombatAttackState());
 
@@ -51,7 +52,7 @@ public class EnemyAttackCommand : ICommand<BaseCharacter>
         float dist = GetDistanceToSurface(character.transform.position);
         if (_target == null || !_target.IsAlive || dist > _enemy.GetStatValue(CommonStats.AttackRange))
         {
-            _enemy.CurrentTarget = null;
+            _enemy.DisengageCurrentTarget();
             _target?.Disengage(_attackerGO);
             IsComplete = true;
             character.StateMachine.ChangeState(new CharacterIdleState());
@@ -91,7 +92,7 @@ public class EnemyAttackCommand : ICommand<BaseCharacter>
 
     public void Cancel()
     {
-        _enemy.CurrentTarget = null;
+        _enemy.DisengageCurrentTarget();
         _target?.Disengage(_attackerGO);
         IsComplete = true;
     }

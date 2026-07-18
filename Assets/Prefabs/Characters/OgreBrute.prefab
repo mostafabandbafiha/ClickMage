@@ -59,12 +59,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1b599ea53907c1b4ea087d9fbc4dd1c3, type: 2}
   - {fileID: 11400000, guid: fd8ae761caf37c2429965c6816dbfe44, type: 2}
   - {fileID: 11400000, guid: 6f9b71819034cdc4bb715bcd8a3a2993, type: 2}
+  - {fileID: 11400000, guid: 4f27278e234ad52438b5a65d9ea826ed, type: 2}
   maxSlots: 4
   rotationSpeed: 10
   playerControlTimeout: 30
   behaviorTreeTickInterval: 3
   movementThreshold: 0.1
+  guardReturnThreshold: 3
+  activityRadius: 15
+  wanderIdleMin: 2
+  wanderIdleMax: 5
   _targetFaction: 0
+  aggroRadius: 12
+  engageHeroes: 1
+  engageTowersAttackingMe: 1
+  personalHeadingBiasRange: 15
   _data: {fileID: 11400000, guid: 8cd62c8e767d1644bb3d5b07f0918d34, type: 2}
   _gravePrefab: {fileID: 4182190248025263251, guid: 32b1bdfcc27c4534cacff1b59b2547a2, type: 3}
 --- !u!114 &6644246614204755980
@@ -135,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
   animator: {fileID: 469265265137837170}
+  crossFadeDuration: 0.15
 --- !u!195 &4526450492601402454
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -40,7 +40,7 @@ public class RangedAttackCommand : ICommand<BaseCharacter>
             return;
         }
 
-        _enemy.CurrentTarget = _target;
+        _enemy.SetCombatTarget(_target);
         _targetCollider = _target.GetComponent<Collider>();
         _attackTimer = 0f;
         character.StopMoving();
@@ -53,7 +53,7 @@ public class RangedAttackCommand : ICommand<BaseCharacter>
     {
         if (_target == null || !_target.IsAlive)
         {
-            _enemy.CurrentTarget = null;
+            _enemy.DisengageCurrentTarget();
             _target?.Disengage(_attackerGO);
             IsComplete = true;
             character.StateMachine.ChangeState(new CharacterIdleState());
@@ -64,7 +64,7 @@ public class RangedAttackCommand : ICommand<BaseCharacter>
         float dist = GetDistanceToSurface(character.transform.position);
         if (dist > _enemy.GetStatValue(CommonStats.AttackRange) * 1.2f)
         {
-            _enemy.CurrentTarget = null;
+            _enemy.DisengageCurrentTarget();
             _target.Disengage(_attackerGO);
             IsComplete = true;
             character.StateMachine.ChangeState(new CharacterIdleState());
@@ -97,14 +97,14 @@ public class RangedAttackCommand : ICommand<BaseCharacter>
 
     private void PlayAttackAnimation(BaseCharacter character)
     {
-        character.Animator?.PlayAnimation(AnimationKeys.Clips.Harvest);
+        character.Animator?.PlayAnimation(AnimationKeys.Clips.Harvest, true);
         _isAttackAnimPlaying = true;
         _animTimer = 0f;
     }
 
     public void Cancel()
     {
-        _enemy.CurrentTarget = null;
+        _enemy.DisengageCurrentTarget();
         _target?.Disengage(_attackerGO);
         IsComplete = true;
     }

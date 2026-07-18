@@ -24,14 +24,20 @@ public class AttackCommand : ICommand<BaseCharacter>
     {
         if (_target == null || !_target.IsAlive)
         {
+            if (_attacker.CurrentTarget == _target)
+                _attacker.DisengageCurrentTarget();
             _target?.Disengage(_attackerGO);
             IsComplete = true;
+            character.StateMachine.ChangeState(new CharacterIdleState());
+            character.QueueCommand(new SeekAgainCommand());
             return;
         }
 
         if (!_target.TryEngage(_attackerGO))
         {
             // Slot filled between selection and start — bail, let AI re-select next tick.
+            if (_attacker.CurrentTarget == _target)
+                _attacker.DisengageCurrentTarget();
             IsComplete = true;
             character.StateMachine.ChangeState(new CharacterIdleState());
             character.QueueCommand(new SeekAgainCommand());
@@ -39,12 +45,13 @@ public class AttackCommand : ICommand<BaseCharacter>
         }
 
         _targetCollider = _target.GetComponent<Collider>();
-        _attacker.CurrentTarget = _target;
+        _attacker.SetCombatTarget(_target);
         character.StopMoving();
         character.StateMachine.ChangeState(new CombatAttackState());
         PlayAttackAnimation(character);
         _attackTimer = 0f;
     }
+
     public void Tick(BaseCharacter character, float deltaTime)
     {
         if (character == null) return;
@@ -52,7 +59,7 @@ public class AttackCommand : ICommand<BaseCharacter>
         // Check validity BEFORE touching transform/collider
         if (_target == null || !_target.IsAlive)
         {
-            _attacker.CurrentTarget = null;
+            _attacker.DisengageCurrentTarget();
             if (_target != null) _target.Disengage(_attackerGO); // avoid Unity fake-null with ?.
             IsComplete = true;
             character.StateMachine.ChangeState(new CharacterIdleState());
@@ -63,7 +70,7 @@ public class AttackCommand : ICommand<BaseCharacter>
         float dist = GetDistanceToSurface(character.transform.position);
         if (dist > _attacker.GetStatValue(CommonStats.AttackRange))
         {
-            _attacker.CurrentTarget = null;
+            _attacker.DisengageCurrentTarget();
             _target.Disengage(_attackerGO);
             IsComplete = true;
             character.StateMachine.ChangeState(new CharacterIdleState());
@@ -71,21 +78,24 @@ public class AttackCommand : ICommand<BaseCharacter>
             return;
         }
 
+        _attackTimer += deltaTime;
+
         if (_attackTimer >= _attacker.GetStatValue(CommonStats.AttackCooldown))
         {
             _attackTimer = 0f;
             PlayAttackAnimation(character);
         }
     }
+
     private void PlayAttackAnimation(BaseCharacter character)
     {
-        character.Animator?.PlayAnimation(AnimationKeys.Clips.Harvest);
+        character.Animator?.PlayAnimation(AnimationKeys.Clips.Harvest, forceRestart: true);
         _isAttackAnimPlaying = true;
         _animTimer = 0f;
     }
     public void Cancel()
     {
-        _attacker.CurrentTarget = null;
+        _attacker.DisengageCurrentTarget();
         _target?.Disengage(_attackerGO);
         IsComplete = true;
     }
