@@ -85,6 +85,10 @@ MonoBehaviour:
   playerControlTimeout: 30
   behaviorTreeTickInterval: 3
   movementThreshold: 0.1
+  guardReturnThreshold: 3
+  activityRadius: 15
+  wanderIdleMin: 2
+  wanderIdleMax: 5
   _villagerStats: []
   _needsManager: {fileID: 1410733529824014758}
 --- !u!114 &6540704839486972698
@@ -142,6 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   SlotCount: 20
   _startingItems: []
+  _ownerType: 1
 --- !u!114 &3291367276151264989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,6 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
   animator: {fileID: 5968503949032278325}
+  crossFadeDuration: 0.15
 --- !u!195 &7521861673571586894
 NavMeshAgent:
   m_ObjectHideFlags: 0

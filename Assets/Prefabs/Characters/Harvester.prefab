@@ -86,6 +86,10 @@ MonoBehaviour:
   playerControlTimeout: 5
   behaviorTreeTickInterval: 3
   movementThreshold: 0.1
+  guardReturnThreshold: 3
+  activityRadius: 15
+  wanderIdleMin: 2
+  wanderIdleMax: 5
   _data: {fileID: 11400000, guid: 97e4303010887fd40a498f63462df8f8, type: 2}
   harvestPower: {fileID: 11400000, guid: 380a45e8d6eb2804d8ce3e11c65a4da5, type: 2}
   _needsManager: {fileID: 0}
@@ -144,6 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   SlotCount: 20
   _startingItems: []
+  _ownerType: 1
 --- !u!114 &7259667034381098387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,6 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
   animator: {fileID: 8204875531226277708}
+  crossFadeDuration: 0.15
 --- !u!195 &8247625823637626929
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -120,7 +120,7 @@ public class DragDropController : MonoBehaviour
     {
         if (!_isDragging || target == null) return;
 
-        ItemStack leftover = target.Slot.Add(_carried);
+        ItemStack leftover = target.Owner.AddToSlot(target.Slot, _carried);
         _carried = leftover;
 
         if (_carried.IsEmpty)
@@ -284,7 +284,21 @@ public class DragDropController : MonoBehaviour
     private void ReturnToOrigin()
     {
         if (!_carried.IsEmpty && _originSlot != null)
-            _originSlot.Slot.Add(_carried);
+        {
+            var leftover = _originSlot.Owner.AddToSlot(_originSlot.Slot, _carried);
+
+            // Extremely unlikely (it's the same slot it came from), but if for some
+            // reason it doesn't all fit back, don't just drop it — try the rest of
+            // that inventory instead of silently destroying items.
+            if (!leftover.IsEmpty)
+                leftover = _originSlot.Owner.AddItem(leftover);
+
+            // If it *still* doesn't fit (inventory full/changed while dragging),
+            // at least don't lose it silently — decide what you want here,
+            // e.g. drop to world at player's feet, or log a warning.
+            if (!leftover.IsEmpty)
+                Debug.LogWarning($"[DragDrop] Could not return {leftover.Amount}x {leftover.Data?.DisplayName} to origin — inventory full/changed.");
+        }
 
         _carried = ItemStack.Empty;
         EndDrag(success: false);

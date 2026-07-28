@@ -165,7 +165,7 @@ namespace ClickMage.Entities
             var slot = _inventory.GetSlot(slotIndex);
             if (slot == null || item == null) return new ItemStack(item, amount);
 
-            var leftover = slot.Add(new ItemStack(item, amount));
+            var leftover = _inventory.AddToSlot(slot, new ItemStack(item, amount));
 
             // Apply passive effects if the item was successfully placed
             if (!slot.IsEmpty && slot.Item == item)

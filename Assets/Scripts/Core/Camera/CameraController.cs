@@ -42,6 +42,12 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float collectRadius = 1.5f;
     [SerializeField] private float maxDragDistance = 10f;
 
+    [Header("Hover Outline")]
+    [SerializeField] private bool enableHoverOutline = true;
+    [SerializeField] private LayerMask hoverLayer; // usually same as selectableLayer
+
+
+
     // ── Private state ──────────────────────────────────────────────────────
 
     private float _targetZoom;
@@ -60,6 +66,8 @@ public class CameraController : MonoBehaviour
     private List<Collider> _lastCycleHits = new List<Collider>();
     private int _cycleIndex = -1;
 
+    private GameObject _currentHoveredObject;
+    private EPOOutline.Outlinable _currentHoverOutline;
     // ── Lifecycle ──────────────────────────────────────────────────────────
 
     private void Awake()
@@ -77,6 +85,8 @@ public class CameraController : MonoBehaviour
         HandleClickAndHold();
         HandleRightClick();
         ClampPosition();
+
+        if (enableHoverOutline) HandleHover();
     }
 
     // ── Follow-target movement (single point of truth for Y) ───────────────
@@ -319,6 +329,58 @@ public class CameraController : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void HandleHover()
+    {
+        if (BuildModeController.Instance != null && BuildModeController.Instance.IsActive)
+        {
+            ClearHover();
+            return;
+        }
+
+        if (IsPointerOverUI(Input.mousePosition))
+        {
+            ClearHover();
+            return;
+        }
+
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, raycastMaxDistance, hoverLayer))
+        {
+            GameObject hitRoot = hit.collider.transform.root.gameObject; // or GetComponentInParent<Outlinable>()?.gameObject
+
+            if (hitRoot != _currentHoveredObject)
+            {
+                ClearHover();
+                SetHover(hit.collider);
+            }
+        }
+        else
+        {
+            ClearHover();
+        }
+    }
+
+    private void SetHover(Collider hitCollider)
+    {
+        var outlinable = hitCollider.GetComponentInParent<EPOOutline.Outlinable>();
+        if (outlinable == null) return;
+
+        outlinable.FrontParameters.Enabled = true;
+
+        _currentHoveredObject = outlinable.gameObject;
+        _currentHoverOutline = outlinable;
+    }
+
+    private void ClearHover()
+    {
+        if (_currentHoverOutline != null)
+            _currentHoverOutline.FrontParameters.Enabled = false;
+
+        _currentHoveredObject = null;
+        _currentHoverOutline = null;
     }
 
     // FIXED: now restricted to groundLayer, and the plane fallback uses the

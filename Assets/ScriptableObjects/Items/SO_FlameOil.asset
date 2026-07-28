@@ -23,7 +23,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ebdac4f4649cfd043bdd5bc9aac73bbc, type: 2}
   - {fileID: 11400000, guid: 5ee42660c544e78458a4f622d09a5a59, type: 2}
   activeEffect: {fileID: 0}
-  maxStackSize: 1
+  maxStackSize: 99
   worldPrefab: {fileID: 989638299112719969, guid: ba51f6a30f29013409d3bac7f3e5842b, type: 3}
   _tags: 06000000
   _worldVisualPrefab: {fileID: 3578121224214392350, guid: 43912d0a29e2a734fba35eee32422d95, type: 3}
+  _defaultMaxStack: 99
+  _stackRules:
+  - Owner: 0
+    MaxStack: 99
+  - Owner: 1
+    MaxStack: 1
+  - Owner: 2
+    MaxStack: 99

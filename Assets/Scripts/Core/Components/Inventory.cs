@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum OwnerType
+{
+    Player,
+    NPC,
+    Factory,
+    Storage,   // chests, generic containers
+}
+
 /// <summary>
 /// General-purpose fixed-size inventory component.
 /// Attach to: Player, Chest, Entity, anything that stores items.
@@ -14,6 +22,11 @@ public class Inventory : MonoBehaviour
 
     [Header("Starting Items (optional)")]
     [SerializeField] private List<ItemStack> _startingItems = new();
+
+    [Header("Owner")]
+    [SerializeField] private OwnerType _ownerType = OwnerType.Player;
+    public OwnerType Owner => _ownerType;
+
     // ── Events ────────────────────────────────────────────────────────────────
     public event Action<ItemSlot> OnSlotChanged;
     public event Action OnInventoryChanged;
@@ -70,29 +83,39 @@ public class Inventory : MonoBehaviour
     public ItemStack AddItem(ItemStack incoming)
     {
         if (incoming.IsEmpty) return ItemStack.Empty;
+        int cap = incoming.Data.GetMaxStack(_ownerType);
 
-        // Pass 1: merge into existing stacks of same type
         foreach (var slot in _slots)
         {
             if (!slot.IsEmpty && slot.Item == incoming.Data)
             {
-                incoming = slot.Add(incoming);
+                incoming = slot.Add(incoming, cap);
                 if (incoming.IsEmpty) return ItemStack.Empty;
             }
         }
 
-        // Pass 2: fill empty slots
         foreach (var slot in _slots)
         {
             if (slot.IsEmpty)
             {
-                incoming = slot.Add(incoming);
+                incoming = slot.Add(incoming, cap);
                 if (incoming.IsEmpty) return ItemStack.Empty;
             }
         }
 
         OnChanged?.Invoke();
-        return incoming; // whatever couldn't fit
+        return incoming;
+    }
+
+    public ItemStack AddToSlot(ItemSlot slot, ItemStack incoming)
+    {
+        if (slot == null || incoming.IsEmpty) return incoming;
+
+        int cap = incoming.Data.GetMaxStack(_ownerType);
+        var leftover = slot.Add(incoming, cap);
+
+        OnChanged?.Invoke();
+        return leftover;
     }
 
     /// <summary>
@@ -129,29 +152,5 @@ public class Inventory : MonoBehaviour
     public ItemSlot GetSlot(int index) =>
         (index >= 0 && index < _slots.Count) ? _slots[index] : null;
 
-    /// <summary>Swap the contents of two slots (works across inventories).</summary>
-    public static void SwapSlots(ItemSlot a, ItemSlot b)
-    {
-        var tmp = a.Stack;
-        a.Set(b.Stack);
-        b.Set(tmp);
-    }
 
-    /// <summary>
-    /// Move up to 'amount' items from slot src into slot dst (handles merging).
-    /// Returns leftover ItemStack.
-    /// </summary>
-    public static ItemStack MoveSlotToSlot(ItemSlot src, ItemSlot dst, int amount)
-    {
-        if (src == null || dst == null || src.IsEmpty) return ItemStack.Empty;
-        if (src == dst) return ItemStack.Empty;
-
-        var taking = src.Remove(amount);
-        var leftover = dst.Add(taking);
-
-        // Put leftover back into src
-        if (!leftover.IsEmpty) src.Add(leftover);
-
-        return leftover;
-    }
 }

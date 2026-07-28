@@ -6,6 +6,8 @@ public class StructureDefinition : ScriptableObject
 {
     public string Name;
     public GameObject Prefab;
+    [TextArea] public string Description;
+    public Sprite Icon;
 
     [Header("Size in grid cells")]
     public Vector2Int Size = Vector2Int.one; // e.g. (2,2) for a 2x2 structure

@@ -1,4 +1,5 @@
 ﻿using ClickMage.Items;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,6 +26,13 @@ public enum DamageType
     Bleed = 1 << 3,
     Poison = 1 << 4,
     Reflect = 1 << 5,
+}
+
+[Serializable]
+public struct StackRule
+{
+    public OwnerType Owner;
+    public int MaxStack;      // use -1 to mean "infinite"
 }
 
 /// <summary>
@@ -60,6 +68,11 @@ public class ItemData : ScriptableObject
     [SerializeField] private GameObject _worldVisualPrefab;
 
 
+    [Header("Stacking")]
+    [SerializeField] private int _defaultMaxStack = 99;
+    [SerializeField] private List<StackRule> _stackRules = new();
+
+
     // ── IItem interface ───────────────────────────────────────────────────
     public string ItemID => itemID;
     public string DisplayName => displayName;
@@ -77,4 +90,22 @@ public class ItemData : ScriptableObject
 
     public bool HasTag(ItemTag tag) => _tags.Contains(tag);
     public GameObject WorldVisualPrefab => _worldVisualPrefab;
+
+    /// <summary>Resolves the max stack size for this item when held by a given owner type.</summary>
+    public int GetMaxStack(OwnerType owner)
+    {
+        foreach (var rule in _stackRules)
+            if (rule.Owner == owner)
+                return rule.MaxStack < 0 ? int.MaxValue : rule.MaxStack;
+
+        return Mathf.Max(1, _defaultMaxStack);
+    }
+
+    /// <summary>For UI/tooltips — full breakdown of how this item stacks per owner type.</summary>
+    public IEnumerable<(OwnerType Owner, int Max)> GetAllStackRules()
+    {
+        foreach (OwnerType owner in Enum.GetValues(typeof(OwnerType)))
+            yield return (owner, GetMaxStack(owner));
+    }
+
 }

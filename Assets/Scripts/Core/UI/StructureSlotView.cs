@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using Unity.VisualScripting;
 
 public class StructureSlotView : MonoBehaviour, IPointerClickHandler
 {
@@ -15,7 +16,7 @@ public class StructureSlotView : MonoBehaviour, IPointerClickHandler
     {
         _structure = structure;
         _nameText.text = structure.Name;
-        // _iconImage.sprite = structure.Icon; // add Icon field to StructureDefinition when ready
+        if (_iconImage != null) _iconImage.sprite = structure.Icon;
         _highlight.enabled = false;
     }
 
@@ -24,6 +25,6 @@ public class StructureSlotView : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         if (_structure == null) return;
-        BuildPanel.Instance.SelectStructure(this, _structure);
+        StructureTabPanel.Instance.SelectStructure(this, _structure);
     }
 }

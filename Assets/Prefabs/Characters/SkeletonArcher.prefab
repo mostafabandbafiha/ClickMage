@@ -171,6 +171,7 @@ MonoBehaviour:
   _startingItems:
   - Data: {fileID: 11400000, guid: 5135f0eb5c066904e833d2940e937e25, type: 2}
     Amount: 1
+  _ownerType: 1
 --- !u!114 &1060650673004872164
 MonoBehaviour:
   m_ObjectHideFlags: 0

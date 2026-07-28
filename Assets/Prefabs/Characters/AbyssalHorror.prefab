@@ -65,7 +65,15 @@ MonoBehaviour:
   playerControlTimeout: 30
   behaviorTreeTickInterval: 3
   movementThreshold: 0.1
+  guardReturnThreshold: 3
+  activityRadius: 15
+  wanderIdleMin: 2
+  wanderIdleMax: 5
   _targetFaction: 0
+  aggroRadius: 12
+  engageHeroes: 1
+  engageTowersAttackingMe: 1
+  personalHeadingBiasRange: 15
   _data: {fileID: 11400000, guid: 044319c8e08d68544949b2a415991cf1, type: 2}
   _gravePrefab: {fileID: 4182190248025263251, guid: 32b1bdfcc27c4534cacff1b59b2547a2, type: 3}
   _summonPrefabs:
@@ -127,6 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   SlotCount: 4
   _startingItems: []
+  _ownerType: 1
 --- !u!114 &1060650673004872164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
   animator: {fileID: 836821118712083519}
+  crossFadeDuration: 0.15
 --- !u!195 &1035364186736838931
 NavMeshAgent:
   m_ObjectHideFlags: 0

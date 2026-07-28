@@ -44,7 +44,7 @@ public class ItemSlot
     /// Add items to this slot.
     /// Returns a stack of whatever did NOT fit (Empty if everything fit).
     /// </summary>
-    public ItemStack Add(ItemStack incoming)
+    public ItemStack Add(ItemStack incoming, int maxStack)
     {
         if (incoming.IsEmpty) return ItemStack.Empty;
 

@@ -1,92 +1,61 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildPanel : MonoBehaviour
 {
     public static BuildPanel Instance { get; private set; }
 
-    [SerializeField] private Transform _slotContainer;
-    [SerializeField] private StructureSlotView _slotPrefab;
-    [SerializeField] private List<StructureDefinition> _availableStructures;
-    
-    private StructureSlotView _selectedSlot;
+    [System.Serializable]
+    private class Tab
+    {
+        public Button TabButton;
+        public GameObject Page; // the whole tab's content root (slots + its own description panel)
+    }
+
+    [SerializeField] private List<Tab> _tabs;
 
     private void Awake()
     {
         Instance = this;
-        //gameObject.SetActive(false);
     }
 
-    private void Start() => BuildSlots();
-
-    private void BuildSlots()
+    private void Start()
     {
-        foreach (var def in _availableStructures)
+        foreach (var tab in _tabs)
         {
-            var slot = Instantiate(_slotPrefab, _slotContainer);
-            slot.Bind(def);
+            var capturedTab = tab; // avoid closure-over-loop-variable bug
+            tab.TabButton.onClick.AddListener(() => SwitchTab(capturedTab));
         }
+
+        if (_tabs.Count > 0) SwitchTab(_tabs[0]);
     }
 
-    // called by your existing open button
-    public void Open()
+    private void SwitchTab(Tab tab)
     {
-        gameObject.SetActive(true);
-
+        foreach (var t in _tabs)
+            t.Page.SetActive(t == tab);
     }
+
+    // ── Existing wired buttons — unchanged behavior ─────────────────────────
+    public void Open() => gameObject.SetActive(true);
 
     public void OnBuildModeButtonPressed()
     {
         if (BuildModeController.Instance.IsActive)
-        {
             BuildModeController.Instance.LeaveBuildMode();
-            //_buildModeButtonLabel.text = "Build Mode";
-        }
         else
-        {
             BuildModeController.Instance.EnterBuildMode();
-            //_buildModeButtonLabel.text = "Exit Build";
-        }
-    }
-    public void OnAccept()
-    {
-        BuildModeController.Instance.ConfirmCurrent();
-        ClearSelection();
     }
 
-    public void OnCancel()
-    {
-        BuildModeController.Instance.CancelCurrent();
-        ClearSelection();
-    }
+    public void OnAccept() => BuildModeController.Instance.ConfirmCurrent();
+    public void OnCancel() => BuildModeController.Instance.CancelCurrent();
 
     public void Close()
     {
         BuildModeController.Instance.LeaveBuildMode();
-        ClearSelection();
         gameObject.SetActive(false);
     }
 
-    public void SelectStructure(StructureSlotView slot, StructureDefinition structure)
-    {
-        // deselect previous
-        _selectedSlot?.SetSelected(false);
-
-        _selectedSlot = slot;
-        _selectedSlot.SetSelected(true);
-
-        BuildModeController.Instance.EnterBuildMode(structure);
-    }
-
-    private void ClearSelection()
-    {
-        _selectedSlot?.SetSelected(false);
-        _selectedSlot = null;
-    }
-    // wired to "Build Mode" button OnClick
-    public void OnEnterMoveMode()
-    {
-        ClearSelection();
-        BuildModeController.Instance.EnterBuildMode();
-    }
+    public void OnEnterMoveMode() => BuildModeController.Instance.EnterBuildMode();
 }

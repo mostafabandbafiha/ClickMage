@@ -131,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   SlotCount: 4
   _startingItems: []
+  _ownerType: 1
 --- !u!114 &1135127088538018
 MonoBehaviour:
   m_ObjectHideFlags: 0

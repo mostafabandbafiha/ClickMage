@@ -95,7 +95,15 @@ MonoBehaviour:
   playerControlTimeout: 30
   behaviorTreeTickInterval: 3
   movementThreshold: 0.1
+  guardReturnThreshold: 3
+  activityRadius: 15
+  wanderIdleMin: 2
+  wanderIdleMax: 5
   _targetFaction: 0
+  aggroRadius: 12
+  engageHeroes: 1
+  engageTowersAttackingMe: 1
+  personalHeadingBiasRange: 15
   _data: {fileID: 11400000, guid: 03a9437f66df72d4fb5bf8493f8caf90, type: 2}
   _gravePrefab: {fileID: 4182190248025263251, guid: 32b1bdfcc27c4534cacff1b59b2547a2, type: 3}
   _poisonOrbPrefab: {fileID: 7266010323321817951, guid: 2c4dbdb8d6790db4ea9056e5c78a0493, type: 3}
@@ -157,6 +165,7 @@ MonoBehaviour:
   _startingItems:
   - Data: {fileID: 11400000, guid: 83462acac763de94699bf976bf00782a, type: 2}
     Amount: 1
+  _ownerType: 1
 --- !u!114 &1060650673004872164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
   animator: {fileID: 6880850757435935779}
+  crossFadeDuration: 0.15
 --- !u!195 &1035364186736838931
 NavMeshAgent:
   m_ObjectHideFlags: 0

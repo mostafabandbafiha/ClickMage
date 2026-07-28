@@ -27,3 +27,11 @@ MonoBehaviour:
   worldPrefab: {fileID: 989638299112719969, guid: d5c0622bb8ee6a14e8ca5a5dac22472d, type: 3}
   _tags: 06000000
   _worldVisualPrefab: {fileID: 8419225635831501526, guid: 2467f2034356f10448ede8c859c536bc, type: 3}
+  _defaultMaxStack: 99
+  _stackRules:
+  - Owner: 0
+    MaxStack: 99
+  - Owner: 1
+    MaxStack: 1
+  - Owner: 2
+    MaxStack: 99
