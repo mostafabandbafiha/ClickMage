@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using deVoid.Utils;
+using ClickMage.Entities;
 
 public class DragDropController : MonoBehaviour
 {
@@ -199,19 +200,21 @@ public class DragDropController : MonoBehaviour
 
     private void DropOnEntity(SelectableComponent entity)
     {
-        // All entities (factories included) just use their Inventory
-        // The factory's HasRequiredInputs() will detect the new items next Tick
-        Inventory target = entity.Inventory;
-
-        if (target == null)
+        var baseEntity = entity.GetComponent<BaseEntity>(); // adjust namespace as needed
+        if (baseEntity == null)
         {
-            Debug.LogWarning("[DragDrop] Entity has no inventory.");
+            Debug.LogWarning("[DragDrop] Entity has no BaseEntity.");
             return;
         }
 
-        ItemStack leftover = target.AddItem(_carried);
-        // OnChanged fires → Factory.OnInventoryChanged() → ForceTick nudges waiting states
+        int slotIndex = baseEntity.FindEmptySlot();
+        if (slotIndex < 0)
+        {
+            Debug.Log("[DragDrop] No empty slot.");
+            return;
+        }
 
+        ItemStack leftover = baseEntity.EquipItem(_carried.Data, slotIndex, _carried.Amount);
         _carried = leftover.Amount > 0 ? leftover : ItemStack.Empty;
     }
 

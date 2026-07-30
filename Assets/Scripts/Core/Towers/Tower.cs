@@ -19,7 +19,7 @@ public abstract class Tower : BaseEntity
     [Header("Ref")]
     [SerializeField] private Transform _firePoint;
     [SerializeField] private Transform _turret;
-    
+    [SerializeField] private ProjectileRegistry _projectileRegistry; // NEW — same pooled system as enemies
 
     protected StateMachine<Tower> stateMachine;
     protected Targetable currentTarget;
@@ -41,7 +41,6 @@ public abstract class Tower : BaseEntity
     {
         stateMachine = new StateMachine<Tower>(this);
         FirePoint = _firePoint;
-        statAssets = BuildStatAssetList();
         base.Awake();
     }
 
@@ -154,17 +153,11 @@ public abstract class Tower : BaseEntity
 
         lastFireTime = Time.time;
 
-        if (towerData.projectilePrefab != null)
+        if (_projectileRegistry != null && _firePoint != null)
         {
-            GameObject projectileObj = Instantiate(
-                towerData.projectilePrefab,
-                _firePoint.position,
-                _firePoint.rotation
-            );
-
-            Projectile projectile = projectileObj.GetComponent<Projectile>();
-            if (projectile != null)
-                projectile.Initialize(target, Damage, this);
+            ProjectileSpawner.Instance.Spawn(
+                this, _projectileRegistry, target, Damage,
+                _firePoint.position, _firePoint.rotation);
         }
 
         if (towerData.shootSound != null)

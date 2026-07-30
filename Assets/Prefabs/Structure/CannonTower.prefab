@@ -64,6 +64,7 @@ MonoBehaviour:
   maxHealth: {fileID: 11400000, guid: 3ab71f4d1c572234e9e3da8214606643, type: 2}
   _firePoint: {fileID: 7571174878483753252}
   _turret: {fileID: 8581147105821527713}
+  _projectileRegistry: {fileID: 11400000, guid: 3188be20b68b7b64ab18f8784fb6428c, type: 2}
 --- !u!114 &2495380482970255464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   SlotCount: 8
   _startingItems: []
+  _ownerType: 1
 --- !u!65 &1519161125334381757
 BoxCollider:
   m_ObjectHideFlags: 0

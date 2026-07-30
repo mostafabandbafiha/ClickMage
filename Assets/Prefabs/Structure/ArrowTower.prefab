@@ -49,8 +49,40 @@ MonoBehaviour:
   _healthBarRoot: {fileID: 568588213212636307}
   _heathText: {fileID: 3203313432701890098}
   _hideWhenFullDelay: 3
+  _uiUpdateInterval: 0.2
   _floatingTextPrefab: {fileID: 1225562174454042960, guid: 0ad14bcde65f18d45a5f70f5b628e767, type: 3}
   _floatingTextSpawnPoint: {fileID: 7992348892075608741}
+  _playerColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  _enemyColor: {r: 0.9, g: 0.2, b: 0.2, a: 1}
+  _neutralColor: {r: 0.9, g: 0.8, b: 0.2, a: 1}
+  _bounceScale: 1.15
+  _bounceDuration: 0.15
+  _bounceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _flashColor: {r: 1, g: 1, b: 1, a: 1}
+  _flashDuration: 0.15
 --- !u!1 &568588213212636307
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,6 +426,7 @@ MonoBehaviour:
   maxHealth: {fileID: 11400000, guid: 3ab71f4d1c572234e9e3da8214606643, type: 2}
   _firePoint: {fileID: 7571174878483753252}
   _turret: {fileID: 2484956526997555870}
+  _projectileRegistry: {fileID: 11400000, guid: ca6aaec5470ded94ab66bdcc3e04fbef, type: 2}
 --- !u!114 &2495380482970255464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,7 +458,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   SlotCount: 8
-  _startingItems: []
+  _startingItems:
+  - Data: {fileID: 11400000, guid: 5135f0eb5c066904e833d2940e937e25, type: 2}
+    Amount: 1
+  _ownerType: 1
 --- !u!65 &1519161125334381757
 BoxCollider:
   m_ObjectHideFlags: 0

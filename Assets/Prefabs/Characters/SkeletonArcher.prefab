@@ -92,7 +92,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8bb9d6792b22eeb46a66859591959eab, type: 2}
   - {fileID: 11400000, guid: d315e968bff6ccc44ba57e0e94d541ff, type: 2}
   - {fileID: 11400000, guid: 6f9b71819034cdc4bb715bcd8a3a2993, type: 2}
-  - {fileID: 11400000, guid: 6f9b71819034cdc4bb715bcd8a3a2993, type: 2}
   maxSlots: 4
   rotationSpeed: 10
   playerControlTimeout: 30
